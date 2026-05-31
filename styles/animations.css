@@ -1,0 +1,247 @@
+/* =============================================
+   FINWISE - ANIMATIONS CSS
+   Keyframes, entrances, transitions
+   ============================================= */
+
+/* ── Entrance Animations ────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Staggered Animation Classes ────────────── */
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.animate-fade-left {
+  opacity: 0;
+  animation: fadeInLeft 0.5s ease forwards;
+}
+
+.animate-scale-in {
+  opacity: 0;
+  animation: scaleIn 0.4s ease forwards;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* ── Scroll-Triggered (via JS IntersectionObserver) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* Cascade reveal for grid children */
+.reveal-cascade > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal-cascade.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+.reveal-cascade.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
+.reveal-cascade.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.2s; }
+.reveal-cascade.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.3s; }
+.reveal-cascade.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.4s; }
+.reveal-cascade.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.5s; }
+.reveal-cascade.visible > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 0.6s; }
+.reveal-cascade.visible > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 0.7s; }
+
+/* ── Floating Animation ─────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float { animation: float 4s ease-in-out infinite; }
+.float-slow { animation: float 6s ease-in-out infinite; }
+
+/* ── Glow Pulse ─────────────────────────────── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.4); }
+  50% { box-shadow: 0 0 20px 8px rgba(0,212,170,0); }
+}
+
+.glow-pulse { animation: glowPulse 2.5s infinite; }
+
+/* ── Spin ───────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 1s linear infinite; }
+
+/* ── Counter Animation ──────────────────────── */
+.counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Chart Bar Animation ────────────────────── */
+@keyframes growUp {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to { transform: scaleY(1); transform-origin: bottom; }
+}
+
+/* ── Shimmer ────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Gradient Mesh Background ───────────────── */
+.mesh-bg {
+  position: relative;
+  overflow: hidden;
+}
+.mesh-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0,212,170,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(245,158,11,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.mesh-bg > * { position: relative; z-index: 1; }
+
+/* ── Number Count Up ────────────────────────── */
+.count-up {
+  font-variant-numeric: tabular-nums;
+  transition: all 0.1s linear;
+}
+
+/* ── Progress Animation ─────────────────────── */
+.progress-animate .progress-fill {
+  width: 0% !important;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.progress-animate.animated .progress-fill {
+  width: var(--target-width) !important;
+}
+
+/* ── Tab Transition ─────────────────────────── */
+.section-page {
+  animation: fadeInUp 0.35s ease both;
+}
+
+/* ── Card Hover Lift ────────────────────────── */
+.hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Reduced Motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-left, .reveal-right {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Loading Spinner ────────────────────────── */
+@keyframes loaderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--color-teal);
+  border-radius: 50%;
+  animation: loaderSpin 0.8s linear infinite;
+}
+
+/* ── Gradient Border Animation ──────────────── */
+@keyframes borderRotate {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-teal), var(--color-amber), var(--color-teal));
+  background-size: 200% 200%;
+  animation: borderRotate 3s linear infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+.gradient-border:hover::before { opacity: 1; }

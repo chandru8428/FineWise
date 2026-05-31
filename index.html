@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FinWise — India's beginner-friendly platform for AI-first personal finance, budgeting, fraud prevention, SIP, credit cards, debt payoff, and wealth management guides.">
+  <meta name="keywords" content="agentic AI personal finance, AI budgeting, finance co-pilot, fraud prevention AI, wealth management AI, personal finance India, SIP calculator, mutual funds, CIBIL score, credit card, budgeting India">
+  <meta name="news_keywords" content="finance news, stock market news, mutual fund news, economy news, crypto news, personal finance news">
+  <meta name="author" content="FinWise">
+  <meta property="og:title" content="FinWise — Learn Finance, Manage Money, Build Wealth">
+  <meta property="og:description" content="Master personal finance with interactive tools, calculators, AI budgeting guides, fraud prevention playbooks, and wealth co-pilot education.">
+  <meta property="og:type" content="website">
+  <title>FinWise — Learn Finance, Manage Money, Build Wealth</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/sections.css">
+  <link rel="stylesheet" href="styles/animations.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* Inline critical CSS */
+    .icon { display: inline-block; width: 18px; height: 18px; vertical-align: middle; }
+    .icon-sm { width: 14px; height: 14px; }
+    .icon-lg { width: 24px; height: 24px; }
+    .icon-xl { width: 32px; height: 32px; }
+    .credit-score-meter { position: relative; padding: 20px; }
+    .meter-arc { display: flex; justify-content: center; }
+    .metric-card { background: var(--bg-input); border-radius: var(--radius-md); padding: var(--space-md); }
+    .metric-card .metric-term { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); }
+    .metric-card .metric-def { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.5; }
+    .fund-screener-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 80px; gap: var(--space-md); align-items: center; padding: var(--space-md); border-bottom: 1px solid var(--border-color); font-size: 0.875rem; }
+    .fund-screener-row:hover { background: var(--bg-hover); }
+    .method-card { background: var(--bg-card); border: 2px solid var(--border-color); border-radius: var(--radius-xl); padding: var(--space-xl); cursor: pointer; transition: all var(--transition-base); }
+    .method-card.selected { border-color: var(--color-teal); background: var(--color-teal-dim); }
+    .method-card:hover { border-color: var(--color-teal); }
+    .tag-filter { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .tag-btn { padding: 6px 14px; border-radius: var(--radius-full); border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all var(--transition-fast); }
+    .tag-btn:hover, .tag-btn.active { background: var(--color-teal-dim); border-color: var(--color-teal); color: var(--color-teal); }
+    .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+    .do-card { background: var(--color-green-dim); border-radius: var(--radius-md); padding: var(--space-md); }
+    .dont-card { background: var(--color-red-dim); border-radius: var(--radius-md); padding: var(--space-md); }
+    .do-card h4 { color: var(--color-green); font-size: 0.875rem; margin-bottom: var(--space-sm); }
+    .dont-card h4 { color: var(--color-red); font-size: 0.875rem; margin-bottom: var(--space-sm); }
+    .do-card li, .dont-card li { font-size: 0.825rem; color: var(--text-secondary); margin: 4px 0; list-style: none; }
+    .hero-float-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-xl); padding: var(--space-lg); min-width: 220px; }
+    @media(max-width:768px){.do-dont{grid-template-columns:1fr;}.fund-screener-row{grid-template-columns:1fr 1fr 1fr;}}
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="app-shell">
+
+    <!-- ═══════════════════════════════════════
+         SIDEBAR NAVIGATION
+         ═══════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <a href="#" class="sidebar-logo" aria-label="FinWise home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1437" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <span class="logo-text">Fin<span>Wise</span></span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Overview</span>
+        <button class="nav-item" data-nav="home">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="nav-label">Home</span>
+        </button>
+
+        <span class="nav-section-label">Learn & Tools</span>
+        <button class="nav-item" data-nav="credit">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <span class="nav-label">Credit Cards</span>
+        </button>
+        <button class="nav-item" data-nav="mutual">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span class="nav-label">Mutual Funds & SIP</span>
+        </button>
+        <button class="nav-item" data-nav="debt">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+          <span class="nav-label">Debt Payoff</span>
+        </button>
+
+        <span class="nav-section-label">Dashboard</span>
+        <button class="nav-item" data-nav="finance">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span class="nav-label">Personal Finance</span>
+        </button>
+        <button class="nav-item" data-nav="ai">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+          <span class="nav-label">AI Finance Guide</span>
+          <span class="nav-badge">AI</span>
+        </button>
+        <button class="nav-item" data-nav="learning" onclick="setTimeout(() => window.filterLearning && window.filterLearning('ai', document.querySelector('[data-filter-ai]')), 120)">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a8 8 0 0 1 16 0"/><path d="M12 6v4"/><path d="M8 10l-2-2"/><path d="M16 10l2-2"/><path d="M7 18h10"/><path d="M10 22h4"/></svg>
+          <span class="nav-label">AI-First Finance</span>
+          <span class="nav-badge">Trend</span>
+        </button>
+        <button class="nav-item" data-nav="hustle">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span class="nav-label">Side Hustle</span>
+        </button>
+
+        <span class="nav-section-label">Resources</span>
+        <button class="nav-item" data-nav="learning">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          <span class="nav-label">Learning Center</span>
+        </button>
+        <button class="nav-item" data-nav="news">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4H8v16a2 2 0 0 1-4 0V6H2v14a2 2 0 0 0 2 2Z"/><path d="M10 6h8"/><path d="M10 10h8"/><path d="M10 14h5"/></svg>
+          <span class="nav-label">Finance News</span>
+          <span class="nav-badge">Live</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="info-box teal" style="font-size:0.75rem; line-height:1.5;">
+          <strong>📚 Disclaimer</strong><br>
+          Content is for educational purposes only. Not financial advice.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════
+         MAIN CONTENT AREA
+         ═══════════════════════════════════════ -->
+    <main class="main-content" id="main-content">
+
+      <!-- Top Bar -->
+      <header class="topbar" role="banner">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          <div class="search-bar" role="search">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" id="searchInput" placeholder="Search topics, calculators..." aria-label="Search finance topics">
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="page-content">
+
+        <!-- ════════════════════════════════════
+             HOME SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-home" aria-label="Home dashboard">
+
+          <!-- Hero -->
+          <div class="hero-section">
+            <div class="hero-content">
+              <div class="hero-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                India's #1 Free Finance Learning Platform
+              </div>
+              <h1 class="hero-title">
+                Learn Finance.<br>
+                Manage <span class="teal">Money.</span><br>
+                Build <span class="amber">Wealth.</span>
+              </h1>
+              <p class="hero-subtitle">
+                Understand credit cards, mutual funds, SIP, debt payoff, and budgeting — all in one place. No jargon. No confusion. Just clarity.
+              </p>
+              <div class="hero-cta">
+                <button class="btn btn-primary btn-lg" data-goto="credit">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                  Start Learning
+                </button>
+                <button class="btn btn-hero-secondary btn-lg" data-goto="mutual">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                  Use Tools
+                </button>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="hero-stats">
+                <div class="hero-float-card float">
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-bottom:4px;">SIP ₹5K/mo → 20 yrs</div>
+                  <div style="font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; color:#00D4AA;" data-counter="4990000" data-prefix="₹">₹49.9L</div>
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.5);">at 12% returns</div>
+                </div>
+                <div class="hero-float-card float-slow">
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-bottom:4px;">CIBIL Score Target</div>
+                  <div style="font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; color:#F59E0B;">750+</div>
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.5);">Best loan rates</div>
+                </div>
+                <div class="hero-float-card" style="animation: float 5s ease-in-out 1s infinite;">
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin-bottom:4px;">Topics Covered</div>
+                  <div style="font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; color:white;">40+</div>
+                  <div style="font-size:0.75rem; color:rgba(255,255,255,0.5);">Free articles & tools</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-grid reveal-cascade">
+            <div class="stat-card">
+              <span class="stat-label">Topics Covered</span>
+              <span class="stat-value" data-counter="40" data-suffix="+">40+</span>
+              <span class="stat-change positive">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                Finance topics
+              </span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Free Calculators</span>
+              <span class="stat-value" data-counter="8">8</span>
+              <span class="stat-change positive">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                Interactive tools
+              </span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Avg SIP Growth</span>
+              <span class="stat-value text-teal" data-counter="12" data-suffix="%">12%</span>
+              <span class="stat-change positive">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                Historical CAGR
+              </span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Sections</span>
+              <span class="stat-value" data-counter="8">8</span>
+              <span class="stat-change positive">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+                Integrated modules
+              </span>
+            </div>
+          </div>
+
+          <!-- Feature Cards -->
+          <div>
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">Everything You Need</h2>
+                <p class="section-subtitle">Eight integrated modules to master your finances</p>
+              </div>
+            </div>
+            <div class="card-grid card-grid-4 reveal-cascade">
+              <div class="feature-card" data-goto="credit">
+                <div class="feature-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                </div>
+                <div class="feature-title">Credit Cards</div>
+                <div class="feature-desc">Master CIBIL scores, card types, hidden charges, and smart usage habits.</div>
+                <button class="badge badge-teal btn-tool-link" data-goto="credit" style="border:none; cursor:pointer;">+ Calculator</button>
+              </div>
+              <div class="feature-card" data-goto="mutual">
+                <div class="feature-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </div>
+                <div class="feature-title">Mutual Funds & SIP</div>
+                <div class="feature-desc">Learn funds, SIP, NAV, compounding, and how to build a portfolio.</div>
+                <button class="badge badge-teal btn-tool-link" data-goto="mutual" style="border:none; cursor:pointer;">+ SIP Calculator</button>
+              </div>
+              <div class="feature-card" data-goto="debt">
+                <div class="feature-icon" style="background: var(--color-amber-dim); color: var(--color-amber);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+                </div>
+                <div class="feature-title">Debt Payoff</div>
+                <div class="feature-desc">Snowball vs avalanche method, repayment planner, and debt tracker.</div>
+                <button class="badge badge-amber btn-tool-link" data-goto="debt" style="border:none; cursor:pointer;">+ Debt Tracker</button>
+              </div>
+              <div class="feature-card" data-goto="finance">
+                <div class="feature-icon" style="background: var(--color-green-dim); color: var(--color-green);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                </div>
+                <div class="feature-title">Personal Finance</div>
+                <div class="feature-desc">Budget tracker, expense tracker, savings goals, and net worth monitor.</div>
+                <button class="badge badge-green btn-tool-link" data-goto="finance" style="border:none; cursor:pointer;">+ Budget Tool</button>
+              </div>
+              <div class="feature-card" data-goto="ai">
+                <div class="feature-icon" style="background: var(--color-purple-dim); color: var(--color-purple);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+                </div>
+                <div class="feature-title">AI Finance Guide</div>
+                <div class="feature-desc">Ask anything — get answers in simple, friendly language from FinAI.</div>
+                <div class="badge badge-purple">AI Powered</div>
+              </div>
+              <div class="feature-card" data-goto="hustle">
+                <div class="feature-icon" style="background: rgba(59,130,246,0.12); color: #3B82F6;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <div class="feature-title">Side Hustle Tracker</div>
+                <div class="feature-desc">Track freelance income, set monthly goals, and monitor growth.</div>
+                <button class="badge btn-tool-link" data-goto="hustle" style="background:rgba(59,130,246,0.1);color:#3B82F6;border:none;cursor:pointer;">+ Income Tracker</button>
+              </div>
+              <div class="feature-card" data-goto="credit">
+                <div class="feature-icon" style="background: rgba(236,72,153,0.12); color: #EC4899;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                </div>
+                <div class="feature-title">Learning Center</div>
+                <div class="feature-desc">40+ articles on credit, investing, budgeting, and wealth building.</div>
+                <div class="badge" style="background:rgba(236,72,153,0.1);color:#EC4899;">40+ Articles</div>
+              </div>
+              <div class="feature-card" style="background: var(--gradient-hero); border: none;">
+                <div class="feature-icon" style="background: rgba(0,212,170,0.2); color: var(--color-teal);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="feature-title" style="color:white;">Start Your Journey</div>
+                <div class="feature-desc" style="color:rgba(255,255,255,0.7);">Pick any section above and start learning — it's completely free, forever.</div>
+                <button class="btn btn-primary" data-goto="credit" style="margin-top:auto;">Get Started →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Section -->
+          <div class="card reveal" style="background: var(--bg-input);">
+            <div class="flex items-center gap-md mb-md">
+              <div style="width:40px;height:40px;background:var(--color-teal-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <h2 class="section-title">Educational Platform — Not Financial Advice</h2>
+                <p class="text-secondary-color text-body-sm mt-sm">FinWise is a free educational platform designed to help you understand personal finance concepts. All calculators use standard financial formulas for illustration purposes. Please consult a SEBI-registered financial advisor before making any investment decisions. Past returns are not indicative of future performance.</p>
+              </div>
+            </div>
+            <div class="flex gap-md" style="flex-wrap:wrap;">
+              <span class="badge badge-green">✓ Free Forever</span>
+              <span class="badge badge-teal">✓ No Login Required</span>
+              <span class="badge badge-amber">✓ No Spam</span>
+              <span class="badge badge-navy">✓ Educational Only</span>
+            </div>
+          </div>
+
+
+          <!-- ==============================================
+               TOP FINANCIAL NEWS SECTION
+               ============================================== -->
+          <div class="card reveal mb-lg" style="margin-top: var(--space-xl);">
+            <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: var(--space-md);">
+              <div>
+                <h2 class="section-title">Top Financial News</h2>
+                <p class="text-caption text-muted-color">Real-time market updates</p>
+              </div>
+              <div class="badge badge-teal" style="display: flex; gap: 4px; align-items: center;">
+                <span class="live-indicator"></span> Live
+              </div>
+            </div>
+            
+            <div id="home-news-container" class="grid grid-3 gap-md">
+              <!-- Skeletons while loading -->
+              <div class="news-card skeleton" style="height: 250px;"></div>
+              <div class="news-card skeleton" style="height: 250px;"></div>
+              <div class="news-card skeleton" style="height: 250px;"></div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ════════════════════════════════════
+             CREDIT CARDS SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-credit" aria-label="Credit Cards">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">💳 Credit Cards</h1>
+              <p class="page-subtitle">Everything you need to know to use credit cards smartly, build your CIBIL score, and avoid common traps.</p>
+            </div>
+            <span class="badge badge-teal">Beginner Friendly</span>
+          </div>
+
+          <!-- What is a credit card -->
+          <div class="content-grid content-grid-2">
+            <div class="card">
+              <h2 class="section-title mb-md">What is a Credit Card?</h2>
+              <p class="text-body text-secondary-color" style="line-height:1.8;">A credit card is a payment instrument issued by a bank or NBFC that allows you to borrow up to a sanctioned limit to make purchases online and offline. It lets you spend using the issuer’s credit and repay later within the billing cycle.</p>
+              <div class="info-box teal mt-md">
+                <strong>RBI Guidelines:</strong> You get a free credit period, but interest applies if the unpaid balance remains after the due date. Paying only the minimum amount due can stretch repayment over years and cause heavy interest costs.
+              </div>
+              <div class="do-dont mt-md">
+                <div class="do-card">
+                  <h4>✅ Do</h4>
+                  <li>Pay full bill on time</li>
+                  <li>Use for planned purchases</li>
+                  <li>Earn rewards on spending</li>
+                  <li>Keep utilization below 30%</li>
+                </div>
+                <div class="dont-card">
+                  <h4>❌ Don't</h4>
+                  <li>Withdraw cash from CC</li>
+                  <li>Pay only minimum due</li>
+                  <li>Overspend beyond budget</li>
+                  <li>Apply for many cards at once</li>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="section-title mb-md">Credit Card vs Debit Card</h2>
+              <div class="comparison-table">
+                <table>
+                  <thead><tr><th>Feature</th><th>Credit Card</th><th>Debit Card</th></tr></thead>
+                  <tbody>
+                    <tr><td>Money Source</td><td>Bank loan</td><td>Your account</td></tr>
+                    <tr><td>Interest</td><td>If not paid in full</td><td>None</td></tr>
+                    <tr><td>Rewards</td><td>High (cashback, points)</td><td>Low</td></tr>
+                    <tr><td>CIBIL Impact</td><td>Yes (positive if used well)</td><td>No</td></tr>
+                    <tr><td>Fraud Protection</td><td>Better protection</td><td>Moderate</td></tr>
+                    <tr><td>Emergency Use</td><td>Yes</td><td>Only if funds available</td></tr>
+                    <tr><td>Spending Risk</td><td>Overspending risk</td><td>Limited to balance</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- CIBIL Score -->
+          <div class="card reveal">
+            <h2 class="section-title mb-lg">CIBIL Score — Your Financial Report Card</h2>
+            <div class="content-grid content-grid-2">
+              <div>
+                <p class="text-body text-secondary-color mb-md">Your CIBIL score (Credit Score) is a <strong>3-digit number between 300-900</strong> that tells banks how creditworthy you are. A higher score = lower interest rates, better loans, and faster approval.</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--space-sm); margin-bottom: var(--space-md);">
+                  <div class="card" style="border-color: var(--color-teal); text-align:center; padding: var(--space-md);">
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--color-teal);">750-900</div>
+                    <div class="badge badge-teal" style="margin-top:4px;">Excellent</div>
+                    <div class="text-caption text-muted-color mt-sm">Best rates & quick approval</div>
+                  </div>
+                  <div class="card" style="border-color: var(--color-green); text-align:center; padding: var(--space-md);">
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--color-green);">700-749</div>
+                    <div class="badge badge-green" style="margin-top:4px;">Good</div>
+                    <div class="text-caption text-muted-color mt-sm">Approved with good terms</div>
+                  </div>
+                  <div class="card" style="border-color: var(--color-amber); text-align:center; padding: var(--space-md);">
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--color-amber);">650-699</div>
+                    <div class="badge badge-amber" style="margin-top:4px;">Fair</div>
+                    <div class="text-caption text-muted-color mt-sm">Higher interest rates</div>
+                  </div>
+                  <div class="card" style="border-color: var(--color-red); text-align:center; padding: var(--space-md);">
+                    <div style="font-size:1.5rem;font-weight:800;color:var(--color-red);">Below 650</div>
+                    <div class="badge badge-red" style="margin-top:4px;">Poor</div>
+                    <div class="text-caption text-muted-color mt-sm">Risk of rejection</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-heading-4 mb-md">What affects your CIBIL score?</h3>
+                <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+                  <div>
+                    <div class="flex justify-between mb-sm"><span class="text-body-sm font-bold">Payment History</span><span class="badge badge-teal">35%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-sm"><span class="text-body-sm">Credit Utilization</span><span class="badge badge-amber">30%</span></div>
+                    <div class="progress-bar"><div class="progress-fill amber" style="width:30%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-sm"><span class="text-body-sm">Credit History Length</span><span class="badge badge-green">15%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:15%;background:var(--color-green)"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-sm"><span class="text-body-sm">Credit Mix</span><span class="badge badge-purple">10%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:10%;background:var(--color-purple)"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-sm"><span class="text-body-sm">New Credit Enquiries</span><span class="badge badge-red">10%</span></div>
+                    <div class="progress-bar"><div class="progress-fill red" style="width:10%"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Types -->
+          <div class="reveal">
+            <div class="section-header">
+              <h2 class="section-title">Types of Credit Cards</h2>
+            </div>
+            <div class="card-grid card-grid-3">
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-teal-dim);">💸</div>
+                <div class="fund-name">Cashback Cards</div>
+                <div class="fund-desc">Earn 1-5% cashback on purchases. Best for everyday spending on groceries, fuel, and bills.</div>
+                <div class="fund-risk" style="background:var(--color-teal-dim);color:var(--color-teal);">Best for: Daily spenders</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-amber-dim);">🏆</div>
+                <div class="fund-name">Reward Cards</div>
+                <div class="fund-desc">Earn reward points on every transaction. Redeem for products, vouchers, or travel.</div>
+                <div class="fund-risk" style="background:var(--color-amber-dim);color:var(--color-amber);">Best for: Frequent shoppers</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(59,130,246,0.12);">✈️</div>
+                <div class="fund-name">Travel Cards</div>
+                <div class="fund-desc">Air miles, airport lounge access, travel insurance, zero forex markup on international transactions.</div>
+                <div class="fund-risk" style="background:rgba(59,130,246,0.12);color:#3B82F6;">Best for: Frequent travelers</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(236,72,153,0.12);">🛍️</div>
+                <div class="fund-name">Shopping Cards</div>
+                <div class="fund-desc">Extra discounts on Amazon, Flipkart, Myntra. Special offers and no-cost EMI options.</div>
+                <div class="fund-risk" style="background:rgba(236,72,153,0.12);color:#EC4899;">Best for: Online shoppers</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(139,92,246,0.12);">💎</div>
+                <div class="fund-name">Premium Cards</div>
+                <div class="fund-desc">Golf, concierge services, international lounge, high reward rates. High annual fee (₹5K-₹50K+).</div>
+                <div class="fund-risk" style="background:rgba(139,92,246,0.12);color:#8B5CF6;">Best for: High spenders</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-green-dim);">🎓</div>
+                <div class="fund-name">Student Cards</div>
+                <div class="fund-desc">No income proof required. Low limit. Build credit history early. Perfect for beginners.</div>
+                <div class="fund-risk" style="background:var(--color-green-dim);color:var(--color-green);">Best for: Students</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- How to Select a Credit Card -->
+          <div class="card reveal mb-lg">
+            <h2 class="section-title mb-md">How to Select a Credit Card</h2>
+            <p class="text-secondary-color text-body mb-md" style="line-height:1.8;">Evaluate based on your monthly spending habits and eligibility criteria. Check fees, charges, and the interest rate before applying.</p>
+            <div class="content-grid content-grid-3">
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <h4 class="text-teal mb-sm" style="font-size:1.1rem;">1. Cashback vs Rewards</h4>
+                <p class="text-body-sm text-secondary-color">Cashback cards are direct and simple. Rewards cards give points for lifestyle spending (dining, online shopping, groceries).</p>
+              </div>
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <h4 class="text-amber mb-sm" style="font-size:1.1rem;">2. Travel Benefits</h4>
+                <p class="text-body-sm text-secondary-color">Look for air miles, zero forex markup, and complimentary airport lounge access if you travel frequently.</p>
+              </div>
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <h4 class="text-green mb-sm" style="font-size:1.1rem;">3. Fuel Expenses</h4>
+                <p class="text-body-sm text-secondary-color">If you commute daily, a co-branded fuel card helps save on fuel surcharges and gives reward points at petrol pumps.</p>
+              </div>
+            </div>
+            <div class="info-box amber mt-md">
+              <strong>Checklist:</strong> Review joining fees, annual charges (and waiver conditions), interest rates, grace periods, and late payment charges before applying. Make sure it matches your primary use case!
+            </div>
+          </div>
+
+          <!-- Hidden Charges -->
+          <div class="card reveal">
+            <h2 class="section-title mb-md">⚠️ Hidden Charges to Watch Out For</h2>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Charge Type</th><th>Typical Rate</th><th>How to Avoid</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Interest (Finance Charge)</strong></td><td class="text-red">24% - 48% p.a.</td><td>Pay full bill before due date</td></tr>
+                  <tr><td><strong>Late Payment Fee</strong></td><td class="text-red">₹500 - ₹1,300</td><td>Enable auto-pay for minimum due</td></tr>
+                  <tr><td><strong>Cash Advance Charge</strong></td><td class="text-red">2.5% of amount + interest from day 1</td><td>Never withdraw cash from credit card</td></tr>
+                  <tr><td><strong>Foreign Transaction Fee</strong></td><td class="text-red">1.5% - 3.5%</td><td>Use zero-forex card abroad</td></tr>
+                  <tr><td><strong>Annual Fee</strong></td><td>₹500 - ₹50,000</td><td>Check if waivable with minimum spend</td></tr>
+                  <tr><td><strong>Over-Limit Fee</strong></td><td>₹500 - 2.5% of exceeded amount</td><td>Keep utilization below 70%</td></tr>
+                  <tr><td><strong>Fuel Surcharge</strong></td><td>1% of transaction</td><td>Use fuel surcharge waiver card</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Credit Utilization Calculator -->
+          <div class="calculator-card reveal" id="cu-calculator">
+            <div class="calculator-header">
+              <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div>
+                <h2 class="section-title">Credit Utilization Calculator</h2>
+                <p class="text-caption text-muted-color">Keep below 30% to maintain a healthy CIBIL score</p>
+              </div>
+            </div>
+            <div class="calculator-body">
+              <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
+                <div class="form-group">
+                  <label class="form-label" for="cu-total-limit">Total Credit Limit (₹)</label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" id="cu-total-limit" class="form-input" value="100000" min="1000" step="1000">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cu-balance-used">Current Balance Used (₹)</label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" id="cu-balance-used" class="form-input" value="30000" min="0" step="500">
+                  </div>
+                </div>
+              </div>
+              <div class="calculator-result">
+                <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Utilization Rate</div>
+                <div class="result-amount" id="cu-utilization">30.0%</div>
+                <div class="progress-bar progress-bar-xl mt-md">
+                  <div class="progress-fill" id="cu-progress-fill" style="width:30%"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:4px;"><span>0%</span><span>30%</span><span>60%</span><span>100%</span></div>
+                <div class="info-box teal mt-md" id="cu-status">✅ Excellent! Your utilization is in the ideal range.</div>
+                <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);" id="cu-recommendation">Keep it up! Your credit utilization is healthy.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Credit Score Improvement Checklist -->
+          <div class="card reveal">
+            <h2 class="section-title mb-md">Credit Score Improvement Checklist</h2>
+            <p class="text-secondary-color text-body-sm mb-lg">Check off the habits you already follow. Build the rest over time.</p>
+            <div class="checklist" data-checklist="credit-habits">
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Pay full outstanding bill</strong> every month before the due date</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Keep credit utilization below 30%</strong> across all cards</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Enable auto-pay</strong> for at least the minimum amount to avoid late fees</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Don't apply for multiple cards</strong> within a short period (hard enquiries hurt score)</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Keep old credit cards active</strong> even with zero usage — credit history length matters</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Check CIBIL report annually</strong> for errors at cibil.com (one free report/year)</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Never withdraw cash</strong> from a credit card</div>
+              </div>
+              <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div class="checklist-text"><strong>Maintain a mix</strong> of credit types (credit card + one loan helps)</div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ════════════════════════════════════
+             MUTUAL FUNDS & SIP SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-mutual" aria-label="Mutual Funds and SIP">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">📈 Mutual Funds & SIP</h1>
+              <p class="page-subtitle">Learn how to invest smartly, understand different fund types, and use SIP to build long-term wealth.</p>
+            </div>
+            <span class="badge badge-green">Wealth Building</span>
+          </div>
+
+          <!-- Basics -->
+          <div class="content-grid content-grid-2">
+            <div class="card" style="grid-column: 1 / -1;">
+              <h2 class="section-title mb-md">Understanding Investments</h2>
+              <div class="content-grid content-grid-2">
+                <div>
+                  <h4 class="text-teal mb-sm">1. What is a Mutual Fund?</h4>
+                  <p class="text-secondary-color text-body-sm mb-md" style="line-height:1.6;">A mutual fund pools money from many investors and invests it in equities, bonds, or money market instruments, professionally managed by a fund manager.</p>
+                  
+                  <h4 class="text-green mb-sm">2. What is an ETF?</h4>
+                  <p class="text-secondary-color text-body-sm mb-md" style="line-height:1.6;">Exchange-Traded Funds track indexes (like Nifty 50) and trade on exchanges just like stocks. They have real-time pricing and generally lower expense ratios than active mutual funds.</p>
+                </div>
+                <div>
+                  <h4 class="text-amber mb-sm">3. What is a Debt Fund?</h4>
+                  <p class="text-secondary-color text-body-sm mb-md" style="line-height:1.6;">Debt funds invest in fixed-income instruments like corporate bonds, government securities, and treasury bills. They are less volatile than equity but carry credit and interest rate risks.</p>
+                  
+                  <h4 class="text-purple mb-sm">4. What is Digital Gold?</h4>
+                  <p class="text-secondary-color text-body-sm" style="line-height:1.6;">Digital gold lets you buy small fractions of physical gold online, stored securely in vaults. <span class="text-amber" style="font-weight:700;">Caution:</span> SEBI does not currently regulate digital gold, and you usually pay a ~3% GST markup on purchases.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="section-title mb-md">Fund Terminology</h2>
+              <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+                <div class="metric-card">
+                  <div class="metric-term">NAV (Net Asset Value)</div>
+                  <div class="metric-def">The price of one unit of a mutual fund. NAV = (Total fund assets - liabilities) ÷ Number of units. Changes daily based on market performance.</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-term">AUM (Assets Under Management)</div>
+                  <div class="metric-def">Total value of money the fund manages. Larger AUM generally = more established fund. But too large can limit mid/small cap funds.</div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h2 class="section-title mb-md">What is SIP?</h2>
+              <p class="text-secondary-color text-body mb-md">SIP (Systematic Investment Plan) means automatically investing a fixed amount in a mutual fund every month — regardless of market conditions.</p>
+              <div class="info-box green mb-md">
+                <strong>Rupee Cost Averaging:</strong> When markets fall, your SIP buys more units at lower prices. When markets rise, fewer units at higher prices. This averages your cost over time.
+              </div>
+              <div class="comparison-table">
+                <table>
+                  <thead><tr><th>Feature</th><th>SIP</th><th>Lump Sum</th></tr></thead>
+                  <tbody>
+                    <tr><td>Investment Style</td><td>Monthly fixed</td><td>One-time large</td></tr>
+                    <tr><td>Market Timing Risk</td><td class="text-teal">Low</td><td class="text-red">High</td></tr>
+                    <tr><td>Best For</td><td>Salaried people</td><td>Windfall/bonus</td></tr>
+                    <tr><td>Discipline</td><td class="text-teal">Automatic</td><td>Manual decision</td></tr>
+                    <tr><td>Minimum Amount</td><td>₹500/month</td><td>₹1,000+</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fund Types -->
+          <div class="reveal">
+            <div class="section-header"><h2 class="section-title">Types of Mutual Funds</h2></div>
+            <div class="card-grid card-grid-4">
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-teal-dim);">📊</div>
+                <div class="fund-name">Equity Funds</div>
+                <div class="fund-desc">Invest in stocks. High risk, high return potential. Ideal for 5+ year horizon.</div>
+                <div class="fund-risk" style="background:var(--color-red-dim);color:var(--color-red);">High Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-green-dim);">🏦</div>
+                <div class="fund-name">Debt Funds</div>
+                <div class="fund-desc">Invest in bonds & government securities. Stable returns, low risk. Good for 1-3 years.</div>
+                <div class="fund-risk" style="background:var(--color-green-dim);color:var(--color-green);">Low Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-amber-dim);">⚖️</div>
+                <div class="fund-name">Hybrid Funds</div>
+                <div class="fund-desc">Mix of equity and debt. Balanced risk-return. Good for moderate investors (3-5 yr).</div>
+                <div class="fund-risk" style="background:var(--color-amber-dim);color:var(--color-amber);">Medium Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(59,130,246,0.12);">📈</div>
+                <div class="fund-name">Index Funds</div>
+                <div class="fund-desc">Track Nifty 50 or Sensex passively. Very low expense ratio. Best for most beginners.</div>
+                <div class="fund-risk" style="background:rgba(59,130,246,0.1);color:#3B82F6;">Medium Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(139,92,246,0.12);">🏢</div>
+                <div class="fund-name">Large Cap</div>
+                <div class="fund-desc">Top 100 companies by market cap. Stable, lower volatility. Consistent returns.</div>
+                <div class="fund-risk" style="background:var(--color-amber-dim);color:var(--color-amber);">Moderate Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(236,72,153,0.12);">🚀</div>
+                <div class="fund-name">Mid Cap</div>
+                <div class="fund-desc">101-250 ranked companies. Higher growth potential, higher volatility than large cap.</div>
+                <div class="fund-risk" style="background:var(--color-red-dim);color:var(--color-red);">High Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:rgba(245,158,11,0.15);">⚡</div>
+                <div class="fund-name">Small Cap</div>
+                <div class="fund-desc">251+ ranked companies. Very high growth & very high risk. Long-term only (7+ years).</div>
+                <div class="fund-risk" style="background:var(--color-red-dim);color:var(--color-red);">Very High Risk</div>
+              </div>
+              <div class="fund-type-card">
+                <div class="fund-icon" style="background:var(--color-teal-dim);">🌊</div>
+                <div class="fund-name">Flexi Cap</div>
+                <div class="fund-desc">Fund manager can invest across large, mid & small cap freely. Dynamic allocation.</div>
+                <div class="fund-risk" style="background:var(--color-amber-dim);color:var(--color-amber);">Medium-High</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- How to Select a Mutual Fund -->
+          <div class="card reveal mb-lg">
+            <h2 class="section-title mb-md">How to Select a Mutual Fund</h2>
+            <p class="text-secondary-color text-body mb-md" style="line-height:1.8;">A mutual fund should be chosen based on your goal, time horizon, and risk appetite, not just by looking at past returns.</p>
+            
+            <div class="content-grid content-grid-3">
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div class="badge badge-teal">Step 1</div><h4 class="text-teal" style="font-size:1.1rem;margin:0;">Start with your Goal</h4></div>
+                <p class="text-body-sm text-secondary-color">Equity funds for long-term growth, debt funds for stability, hybrid funds for a mix, and passive index funds for low-cost investing.</p>
+              </div>
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div class="badge badge-green">Step 2</div><h4 class="text-green" style="font-size:1.1rem;margin:0;">Choose Direct Growth</h4></div>
+                <p class="text-body-sm text-secondary-color">Always pick "Direct" plans over "Regular" plans to avoid distribution commissions. Pick "Growth" instead of "IDCW/Dividend" to benefit from compounding.</p>
+              </div>
+              <div class="card" style="background:var(--color-surface);border:1px solid rgba(255,255,255,0.05);">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div class="badge badge-amber">Step 3</div><h4 class="text-amber" style="font-size:1.1rem;margin:0;">Check Consistency</h4></div>
+                <p class="text-body-sm text-secondary-color">Use rolling returns instead of point-to-point returns to see how the fund performs consistently across different market cycles.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Metrics -->
+          <div class="card reveal">
+            <h2 class="section-title mb-md">Key Metrics for Selecting Funds</h2>
+            <div class="card-grid card-grid-3">
+              <div class="metric-card"><div class="metric-term">Expense Ratio</div><div class="metric-def">Annual fee charged by fund (%). Lower is better. Index funds: 0.1-0.3%. Active funds: up to 2%.</div></div>
+              <div class="metric-card"><div class="metric-term">CAGR (Returns)</div><div class="metric-def">Compounded Annual Growth Rate. Compare 3-year and 5-year CAGR against benchmark index.</div></div>
+              <div class="metric-card"><div class="metric-term">Rolling Returns</div><div class="metric-def">Consistent returns over different time periods. More reliable than point-to-point returns.</div></div>
+              <div class="metric-card"><div class="metric-term">Alpha</div><div class="metric-def">How much the fund outperforms its benchmark. Positive alpha = fund manager adding value.</div></div>
+              <div class="metric-card"><div class="metric-term">Beta</div><div class="metric-def">Market sensitivity. Beta of 1 = moves same as market. Less than 1 = less volatile than market.</div></div>
+              <div class="metric-card"><div class="metric-term">Sharpe Ratio</div><div class="metric-def">Risk-adjusted return. Higher is better. Shows how much return you get per unit of risk taken.</div></div>
+            </div>
+            <div class="info-box amber mt-md">
+              <strong>Beginner Tip:</strong> Don't overanalyze. Start with 1-2 index funds (Nifty 50 + Nifty Next 50). Keep it simple, stay consistent, and invest for the long term.
+            </div>
+          </div>
+
+          <!-- Power of Compounding Chart -->
+          <div class="chart-container reveal">
+            <h3 class="chart-title">Power of Compounding — ₹5,000/month SIP over 30 Years</h3>
+            <div style="height: 300px;">
+              <canvas id="compoundingChart" aria-label="Compounding growth chart"></canvas>
+            </div>
+          </div>
+
+          
+          <!-- ==============================================
+               PREMIUM SIP CALCULATOR DASHBOARD
+               ============================================== -->
+          <div class="calculator-card reveal" id="sip-advanced-dashboard" style="padding: 0; overflow: hidden; background: var(--bg-input);">
+            
+            <!-- Dashboard Header -->
+            <div style="background: var(--color-surface); padding: var(--space-xl); border-bottom: 1px solid var(--border-color);">
+              <div class="flex items-center gap-md">
+                <div style="width: 48px; height: 48px; background: rgba(0,212,170,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </div>
+                <div>
+                  <h2 style="font-size: 1.5rem; color: var(--text-primary); margin: 0;">Smart SIP Planner</h2>
+                  <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Advanced financial projections & AI Insights</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="sip-tabs-container" style="display: flex; gap: 8px; padding: 0 var(--space-xl); border-bottom: 1px solid var(--border-color); overflow-x: auto; scrollbar-width: none;">
+              <button class="sip-tab-btn active" data-target="sip-tab-calculator">Calculator</button>
+              <button class="sip-tab-btn" data-target="sip-tab-planners">Planners</button>
+              <button class="sip-tab-btn" data-target="sip-tab-insights">Data & Insights</button>
+              <button class="sip-tab-btn" data-target="sip-tab-ai">AI Advisor <span class="badge badge-teal" style="padding:2px 6px; font-size:0.7rem; margin-left:4px;">Beta</span></button>
+            </div>
+
+            <!-- Dashboard Body -->
+            <div class="sip-advanced-container sip-mobile-padding">
+              
+              <!-- TAB 1: CORE CALCULATOR -->
+              <div class="sip-tab-content active" id="sip-tab-calculator">
+                <div class="groww-layout">
+                  <!-- Inputs Column -->
+                  <div style="display: flex; flex-direction: column; gap: var(--space-xl);">
+                    
+                    <div class="form-group">
+                      <div class="groww-input-row">
+                        <label class="form-label" for="adv-sip-monthly">Monthly Investment</label>
+                        <div class="groww-input-box input-with-prefix">
+                          <span class="input-prefix">₹</span>
+                          <input type="number" id="adv-sip-monthly" class="groww-input form-input" value="10000" min="500" step="500">
+                        </div>
+                      </div>
+                      <input type="range" class="range-slider mt-sm" min="500" max="100000" step="500" value="10000" data-sync="adv-sip-monthly">
+                    </div>
+                    
+                    <div class="form-group">
+                      <div class="groww-input-row">
+                        <label class="form-label" for="adv-sip-rate">Expected Return (p.a)</label>
+                        <div class="groww-input-box input-with-suffix">
+                          <input type="number" id="adv-sip-rate" class="groww-input form-input" value="12" min="1" max="30" step="0.5">
+                          <span class="input-suffix">%</span>
+                        </div>
+                      </div>
+                      <input type="range" class="range-slider mt-sm" min="1" max="30" step="0.5" value="12" data-sync="adv-sip-rate">
+                    </div>
+
+                    <div class="form-group">
+                      <div class="groww-input-row">
+                        <label class="form-label" for="adv-sip-years">Time Period</label>
+                        <div class="groww-input-box input-with-suffix">
+                          <input type="number" id="adv-sip-years" class="groww-input form-input" value="10" min="1" max="40" step="1">
+                          <span class="input-suffix">Yr</span>
+                        </div>
+                      </div>
+                      <input type="range" class="range-slider mt-sm" min="1" max="40" step="1" value="10" data-sync="adv-sip-years">
+                    </div>
+                    
+                    <!-- Advanced Toggles (Step up & Inflation) -->
+                    <div style="background: var(--color-surface); padding: var(--space-md); border-radius: 12px; border: 1px solid var(--border-color); display:flex; flex-direction: column; gap: var(--space-md);">
+                      <div class="flex" style="justify-content: space-between; align-items: center;">
+                        <div>
+                          <label class="form-label" style="margin:0;">Annual Step-Up</label>
+                          <div class="text-caption text-muted-color">Increase SIP every year</div>
+                        </div>
+                        <div class="groww-input-box input-with-suffix" style="width: 100px;">
+                          <input type="number" id="adv-sip-stepup" class="groww-input form-input" value="10" min="0" max="50" step="1" style="font-size: 1rem; padding: 6px;">
+                          <span class="input-suffix" style="font-size: 0.8rem;">%</span>
+                        </div>
+                      </div>
+                      <div style="height: 1px; background: var(--border-color);"></div>
+                      <div class="flex" style="justify-content: space-between; align-items: center;">
+                        <div>
+                          <label class="form-label" style="margin:0;">Expected Inflation</label>
+                          <div class="text-caption text-muted-color">For inflation-adjusted value</div>
+                        </div>
+                        <div class="groww-input-box input-with-suffix" style="width: 100px;">
+                          <input type="number" id="adv-sip-inflation" class="groww-input form-input" value="6" min="0" max="15" step="0.5" style="font-size: 1rem; padding: 6px;">
+                          <span class="input-suffix" style="font-size: 0.8rem;">%</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  
+                  <!-- Results & Chart Column -->
+                  <div class="groww-results-block" style="display:flex; flex-direction:column;">
+                    <div class="grid grid-2 gap-sm mb-lg">
+                      <div style="background: rgba(148, 163, 184, 0.05); padding: 12px; border-radius: 8px;">
+                        <div class="text-caption text-muted-color">Total Invested</div>
+                        <div id="adv-sip-invested" style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary);">₹12,00,000</div>
+                      </div>
+                      <div style="background: rgba(0, 212, 170, 0.05); padding: 12px; border-radius: 8px;">
+                        <div class="text-caption text-muted-color">Wealth Gained</div>
+                        <div id="adv-sip-returns" style="font-size: 1.1rem; font-weight: 600; color: var(--color-teal);">₹11,23,000</div>
+                      </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-bottom: 24px;">
+                      <div class="text-muted-color" style="font-weight: 600; margin-bottom: 4px;">Total Future Value</div>
+                      <div id="adv-sip-total" style="font-size: 2rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px;">₹23,23,000</div>
+                      <div class="mt-sm" style="display:inline-block; background: rgba(245, 158, 11, 0.1); color: var(--color-amber); padding: 4px 12px; border-radius: 100px; font-size: 0.85rem; font-weight: 500;">
+                        Inflation Adjusted: <span id="adv-sip-inflation-total">₹12,00,000</span>
+                      </div>
+                    </div>
+
+                    <div style="flex: 1; min-height: 250px; position: relative;">
+                      <canvas id="sipAdvancedChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 2: PLANNERS (Coming soon placeholders for scope) -->
+              <div class="sip-tab-content" id="sip-tab-planners">
+                <div class="card-grid card-grid-3">
+                  <div class="card" style="background: var(--color-surface); border: 1px solid var(--border-color); text-align:center;">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🎯</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">Goal Planner</h3>
+                    <p class="text-caption text-muted-color">Calculate SIP required for a specific financial target.</p>
+                    <button class="btn btn-secondary mt-md" style="width:100%; justify-content:center;">Open Planner</button>
+                  </div>
+                  <div class="card" style="background: var(--color-surface); border: 1px solid var(--border-color); text-align:center;">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🏖️</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">Retirement</h3>
+                    <p class="text-caption text-muted-color">Plan your FIRE journey and retirement corpus.</p>
+                    <button class="btn btn-secondary mt-md" style="width:100%; justify-content:center;">Open Planner</button>
+                  </div>
+                  <div class="card" style="background: var(--color-surface); border: 1px solid var(--border-color); text-align:center;">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🎓</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary);">Education</h3>
+                    <p class="text-caption text-muted-color">Secure your child's higher education costs.</p>
+                    <button class="btn btn-secondary mt-md" style="width:100%; justify-content:center;">Open Planner</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 3: DATA & INSIGHTS -->
+              <div class="sip-tab-content" id="sip-tab-insights">
+                <h3 class="section-title mb-md" style="font-size: 1.2rem;">Year-wise Growth Breakdown</h3>
+                <div class="table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Year</th>
+                        <th>Annual Inv.</th>
+                        <th>Total Invested</th>
+                        <th>Yearly Gains</th>
+                        <th>Year-End Corpus</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adv-sip-table-body">
+                      <!-- Filled by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- TAB 4: AI ADVISOR -->
+              <div class="sip-tab-content" id="sip-tab-ai">
+                <div class="groww-layout">
+                  <div>
+                    <h3 class="section-title mb-sm" style="font-size: 1.2rem;">AI Insights on your plan</h3>
+                    <div id="adv-ai-insight" style="background: var(--color-surface); border: 1px solid rgba(0, 212, 170, 0.3); border-left: 4px solid var(--color-teal); padding: var(--space-lg); border-radius: 8px; color: var(--text-primary); font-size: 0.95rem; line-height: 1.6;">
+                      <!-- Filled by JS -->
+                    </div>
+                  </div>
+                  <div style="display: flex; flex-direction: column; background: var(--color-surface); border: 1px solid var(--border-color); border-radius: 12px; height: 350px;">
+                    <div style="padding: 12px 16px; border-bottom: 1px solid var(--border-color); font-weight: 600; color: var(--text-primary); display:flex; align-items:center; gap:8px;">
+                      <div style="width:8px;height:8px;background:var(--color-teal);border-radius:50%;"></div> FinWise Assistant
+                    </div>
+                    <div id="ai-chat-messages" style="flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column;">
+                      <div style="text-align: left; margin-bottom: 12px;">
+                        <div style="display:inline-block; background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 14px; border-radius: 16px 16px 16px 0; font-size: 0.9rem;">
+                          Hi! Ask me anything about your SIP plan, inflation, or how to reach 1 Crore.
+                        </div>
+                      </div>
+                    </div>
+                    <div style="padding: 12px; border-top: 1px solid var(--border-color); display: flex; gap: 8px;">
+                      <input type="text" id="ai-chat-input" class="form-input" placeholder="e.g. How to reach 1Cr?" style="background: var(--bg-input); border: none;">
+                      <button id="ai-send-btn" class="btn btn-primary" style="padding: 0 16px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Lumpsum Calculator -->
+          <div class="calculator-card reveal" id="lumpsum-calculator">
+            <div class="calculator-header">
+              <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg></div>
+              <div>
+                <h2 class="section-title">Lumpsum Calculator</h2>
+                <p class="text-caption text-muted-color">Calculate returns on one-time investments</p>
+              </div>
+            </div>
+            <div class="calculator-body groww-layout">
+              <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ls-principal">Total Investment</label>
+                    <div class="groww-input-box input-with-prefix">
+                      <span class="input-prefix">₹</span>
+                      <input type="number" id="ls-principal" class="groww-input form-input" value="100000" min="1000" step="5000">
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1000" max="1000000" step="5000" value="100000" data-sync="ls-principal">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ls-rate">Expected Return</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="ls-rate" class="groww-input form-input" value="12" min="1" max="30" step="0.5">
+                      <span class="input-suffix">%</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="30" step="0.5" value="12" data-sync="ls-rate">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ls-years">Time Period</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="ls-years" class="groww-input form-input" value="10" min="1" max="40" step="1">
+                      <span class="input-suffix">Yr</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="40" step="1" value="10" data-sync="ls-years">
+                </div>
+              </div>
+              
+              <div class="groww-results-block" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="result-highlight text-center mb-md">
+                  <span class="text-caption text-secondary-color block mb-xs">Total Future Value</span>
+                  <div class="text-h2 text-teal" id="ls-future-value">₹ 3,10,584</div>
+                </div>
+                
+                <div class="groww-legend mt-md" style="width:100%;">
+                  <div class="groww-legend-item">
+                    <div class="groww-legend-dot" style="background:rgba(15,23,42,0.15);"></div>
+                    <div style="display:flex;flex-direction:column;">
+                      <span class="text-caption text-muted-color">Absolute Return</span>
+                      <span class="groww-legend-value" id="ls-cagr">210.6%</span>
+                    </div>
+                  </div>
+                  <div class="groww-legend-item" style="text-align:right;">
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                      <span class="text-caption text-muted-color">Est. returns</span>
+                      <span class="groww-legend-value" id="ls-gains" style="color:var(--color-teal);">₹ 2,10,584</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Goal-Based SIP Planner -->
+          <div class="calculator-card reveal">
+            <div class="calculator-header">
+              <div class="feature-icon" style="background:var(--color-amber-dim);color:var(--color-amber);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><h2 class="section-title">Goal-Based SIP Planner</h2><p class="text-caption text-muted-color">How much SIP do I need to reach my goal?</p></div>
+            </div>
+            <div class="calculator-body groww-layout">
+              <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="goal-amount">Target Amount</label>
+                    <div class="groww-input-box input-with-prefix">
+                      <span class="input-prefix">₹</span>
+                      <input type="number" id="goal-amount" class="groww-input form-input" value="1000000" min="10000" step="10000">
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="10000" max="10000000" step="10000" value="1000000" data-sync="goal-amount">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="goal-years">Time to Achieve</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="goal-years" class="groww-input form-input" value="10" min="1" max="40" step="1">
+                      <span class="input-suffix">Yr</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="40" step="1" value="10" data-sync="goal-years">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="goal-rate">Expected Return</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="goal-rate" class="groww-input form-input" value="12" min="1" max="30" step="0.5">
+                      <span class="input-suffix">%</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="30" step="0.5" value="12" data-sync="goal-rate">
+                </div>
+              </div>
+              
+              <div class="groww-results-block" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="result-highlight text-center mb-md">
+                  <span class="text-caption text-secondary-color block mb-xs">Required Monthly SIP</span>
+                  <div class="text-h2 text-teal" id="goal-monthly-sip">₹ 4,304</div>
+                </div>
+                
+                <div class="groww-legend mt-md" style="width:100%;">
+                  <div class="groww-legend-item">
+                    <div class="groww-legend-dot" style="background:rgba(15,23,42,0.15);"></div>
+                    <div style="display:flex;flex-direction:column;">
+                      <span class="text-caption text-muted-color">Invested amount</span>
+                      <span class="groww-legend-value" id="goal-total-invested">₹ 5,16,480</span>
+                    </div>
+                  </div>
+                  <div class="groww-legend-item" style="text-align:right;">
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                      <span class="text-caption text-muted-color">Est. returns</span>
+                      <span class="groww-legend-value" id="goal-total-gains" style="color:var(--color-teal);">₹ 4,83,520</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fund Comparison Chart -->
+          <div class="chart-container reveal">
+            <h3 class="chart-title">Fund Category CAGR Comparison (Historical)</h3>
+            <div style="height: 280px;"><canvas id="fundComparisonChart" aria-label="Fund comparison chart"></canvas></div>
+          </div>
+
+          <!-- Direct vs Regular -->
+          <div class="content-grid content-grid-2 reveal">
+            <div class="card card-teal">
+              <h3 class="text-heading-3 mb-sm text-teal">Direct Plans ✅</h3>
+              <p class="text-body-sm text-secondary-color mb-md">Invest directly with the AMC. No distributor commission. Lower expense ratio. Higher returns over time.</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+                <li class="text-body-sm">✅ 0.5-1% lower expense ratio</li>
+                <li class="text-body-sm">✅ Higher NAV accumulation</li>
+                <li class="text-body-sm">✅ Available on Groww, Zerodha, Kuvera</li>
+                <li class="text-body-sm">✅ Best for self-directed investors</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 class="text-heading-3 mb-sm text-amber">Regular Plans ⚠️</h3>
+              <p class="text-body-sm text-secondary-color mb-md">Invested through distributors. Higher expense ratio because commission goes to the distributor.</p>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+                <li class="text-body-sm">⚠️ Higher expense ratio</li>
+                <li class="text-body-sm">⚠️ Lower returns over 10+ years</li>
+                <li class="text-body-sm">✅ Good if you need personalized advice</li>
+                <li class="text-body-sm">✅ Available through bank/broker advisors</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════
+             DEBT PAYOFF SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-debt" aria-label="Debt Payoff">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">💸 Debt Payoff Planner</h1>
+              <p class="page-subtitle">Learn the smartest strategies to become debt-free and track your repayment progress.</p>
+            </div>
+            <span class="badge badge-red">Debt Freedom</span>
+          </div>
+
+          <!-- Methods -->
+          <div class="content-grid content-grid-2">
+            <div class="method-card" id="method-snowball" onclick="selectMethod('snowball')">
+              <div style="font-size:2rem; margin-bottom: var(--space-md);">❄️</div>
+              <h2 class="section-title mb-sm">Debt Snowball</h2>
+              <p class="text-body-sm text-secondary-color mb-md">Pay smallest debt first. Get quick wins to stay motivated.</p>
+              <div class="badge badge-teal mb-md">Psychologically Motivated</div>
+              <ol style="padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:0.875rem;color:var(--text-secondary);">
+                <li>List debts smallest to largest balance</li>
+                <li>Pay minimum on all except smallest</li>
+                <li>Throw extra money at smallest debt</li>
+                <li>Roll payment to next when paid off</li>
+              </ol>
+              <div class="info-box teal mt-md"><strong>Best for:</strong> People who need motivation & visible progress</div>
+            </div>
+            <div class="method-card" id="method-avalanche" onclick="selectMethod('avalanche')">
+              <div style="font-size:2rem; margin-bottom: var(--space-md);">🌊</div>
+              <h2 class="section-title mb-sm">Debt Avalanche</h2>
+              <p class="text-body-sm text-secondary-color mb-md">Pay highest interest debt first. Saves the most money.</p>
+              <div class="badge badge-amber mb-md">Mathematically Optimal</div>
+              <ol style="padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:0.875rem;color:var(--text-secondary);">
+                <li>List debts highest to lowest interest rate</li>
+                <li>Pay minimum on all debts</li>
+                <li>Put ALL extra money at highest-rate debt</li>
+                <li>Roll payment to next when paid off</li>
+              </ol>
+              <div class="info-box amber mt-md"><strong>Best for:</strong> Disciplined people focused on saving interest</div>
+            </div>
+          </div>
+
+          
+          <!-- EMI Calculator -->
+          <div class="calculator-card reveal" id="emi-calculator">
+            <div class="calculator-header">
+              <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+              <div>
+                <h2 class="section-title">EMI Calculator</h2>
+                <p class="text-caption text-muted-color">Calculate home, car or personal loan EMIs</p>
+              </div>
+            </div>
+            <div class="calculator-body groww-layout">
+              <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="emi-principal">Loan Amount</label>
+                    <div class="groww-input-box input-with-prefix">
+                      <span class="input-prefix">₹</span>
+                      <input type="number" id="emi-principal" class="groww-input form-input" value="500000" min="10000" step="10000">
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="10000" max="10000000" step="10000" value="500000" data-sync="emi-principal">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="emi-rate">Interest Rate</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="emi-rate" class="groww-input form-input" value="9" min="1" max="25" step="0.1">
+                      <span class="input-suffix">%</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="25" step="0.1" value="9" data-sync="emi-rate">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="emi-tenure">Loan Tenure</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="emi-tenure" class="groww-input form-input" value="5" min="1" max="30" step="1">
+                      <span class="input-suffix">Yr</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="1" max="30" step="1" value="5" data-sync="emi-tenure">
+                </div>
+              </div>
+              
+              <div class="groww-results-block" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="result-highlight text-center mb-md">
+                  <span class="text-caption text-secondary-color block mb-xs">Monthly EMI</span>
+                  <div class="text-h2 text-teal" id="emi-amount">₹ 10,379</div>
+                </div>
+                
+                <div class="groww-legend mt-md" style="width:100%;">
+                  <div class="groww-legend-item">
+                    <div class="groww-legend-dot" style="background:rgba(15,23,42,0.15);"></div>
+                    <div style="display:flex;flex-direction:column;">
+                      <span class="text-caption text-muted-color">Total Payment</span>
+                      <span class="groww-legend-value" id="emi-total-payment">₹ 6,22,751</span>
+                    </div>
+                  </div>
+                  <div class="groww-legend-item" style="text-align:right;">
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                      <span class="text-caption text-muted-color">Total Interest</span>
+                      <span class="groww-legend-value" id="emi-total-interest" style="color:var(--color-teal);">₹ 1,22,751</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+\n          <!-- Add Debts -->
+          <div class="content-grid content-grid-sidebar">
+            <div>
+              <div class="section-header"><h2 class="section-title">Your Debt Tracker</h2></div>
+              <div class="card mb-lg">
+                <h3 class="text-heading-4 mb-md">Add a Debt</h3>
+                <form id="debt-form" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);">
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label" for="debt-name">Debt Name</label>
+                    <input type="text" id="debt-name" class="form-input" placeholder="e.g. HDFC Credit Card" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="debt-balance">Balance (₹)</label>
+                    <div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="debt-balance" class="form-input" placeholder="50000" required min="0"></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="debt-rate">Interest Rate (%)</label>
+                    <input type="number" id="debt-rate" class="form-input" placeholder="18" min="0" max="60" step="0.5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="debt-min-payment">Min Monthly Payment (₹)</label>
+                    <div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="debt-min-payment" class="form-input" placeholder="2000" min="0"></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="debt-method">Strategy</label>
+                    <select id="debt-method" class="form-select">
+                      <option value="avalanche">Avalanche (Save More $)</option>
+                      <option value="snowball">Snowball (Quick Wins)</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="grid-column:1/-1;">Add Debt</button>
+                </form>
+              </div>
+              <div id="debt-list"></div>
+            </div>
+            <div>
+              <div class="section-header"><h2 class="section-title">Payoff Analysis</h2></div>
+              <div class="card mb-md">
+                <div class="form-group mb-md">
+                  <label class="form-label" for="debt-extra-payment">Extra Monthly Payment (₹)</label>
+                  <div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="debt-extra-payment" class="form-input" value="0" min="0"></div>
+                </div>
+                <div class="stat-card mb-md">
+                  <span class="stat-label">Total Debt</span>
+                  <span class="stat-value text-red" id="debt-total">₹0</span>
+                </div>
+              </div>
+              <div id="debt-result" class="card">
+                <p class="text-secondary-color text-body-sm">Add debts on the left to see your payoff plan here.</p>
+              </div>
+              <div class="chart-container mt-md">
+                <h3 class="chart-title">Debt Overview</h3>
+                <div style="height:200px;"><canvas id="debtTimelineChart" aria-label="Debt balance chart"></canvas></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════
+             PERSONAL FINANCE SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-finance" aria-label="Personal Finance">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">🏦 Personal Finance Dashboard</h1>
+              <p class="page-subtitle">Track your income, expenses, savings goals, and net worth in one place.</p>
+            </div>
+          </div>
+
+          
+          <!-- Retirement Calculator -->
+          <div class="calculator-card reveal">
+            <div class="calculator-header">
+              <div class="feature-icon" style="background:var(--color-blue-dim);color:var(--color-blue);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <div><h2 class="section-title">Retirement Calculator</h2><p class="text-caption text-muted-color">How much do you need to retire comfortably?</p></div>
+            </div>
+            <div class="calculator-body groww-layout">
+              <div style="display:flex;flex-direction:column;gap:var(--space-xl);">
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ret-current-age">Current Age</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="ret-current-age" class="groww-input form-input" value="30" min="18" max="60" step="1">
+                      <span class="input-suffix">Yr</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="18" max="60" step="1" value="30" data-sync="ret-current-age">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ret-retire-age">Retirement Age</label>
+                    <div class="groww-input-box input-with-suffix">
+                      <input type="number" id="ret-retire-age" class="groww-input form-input" value="60" min="40" max="75" step="1">
+                      <span class="input-suffix">Yr</span>
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="40" max="75" step="1" value="60" data-sync="ret-retire-age">
+                </div>
+                
+                <div class="form-group">
+                  <div class="groww-input-row">
+                    <label class="form-label" for="ret-monthly-expense">Current Monthly Expenses</label>
+                    <div class="groww-input-box input-with-prefix">
+                      <span class="input-prefix">₹</span>
+                      <input type="number" id="ret-monthly-expense" class="groww-input form-input" value="50000" min="10000" step="5000">
+                    </div>
+                  </div>
+                  <input type="range" class="range-slider mt-sm" min="10000" max="500000" step="5000" value="50000" data-sync="ret-monthly-expense">
+                </div>
+              </div>
+              
+              <div class="groww-results-block" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="result-highlight text-center mb-md">
+                  <span class="text-caption text-secondary-color block mb-xs">Retirement Corpus Needed</span>
+                  <div class="text-h2 text-teal" id="ret-corpus">₹ 5.76 Cr</div>
+                </div>
+                
+                <div class="groww-legend mt-md" style="width:100%;">
+                  <div class="groww-legend-item">
+                    <div class="groww-legend-dot" style="background:rgba(15,23,42,0.15);"></div>
+                    <div style="display:flex;flex-direction:column;">
+                      <span class="text-caption text-muted-color">Required Monthly SIP</span>
+                      <span class="groww-legend-value" id="ret-monthly-sip">₹ 16,334</span>
+                    </div>
+                  </div>
+                  <div class="groww-legend-item" style="text-align:right;">
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                      <span class="text-caption text-muted-color">Expected Return</span>
+                      <span class="groww-legend-value" style="color:var(--color-teal);">12% p.a.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="info-box teal mt-md" style="width:100%;">Assumes 6% inflation and 30 years in retirement.</div>
+              </div>
+            </div>
+          </div>
+\n          <!-- Summary Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Total Income</span>
+              <span class="stat-value text-green" id="tracker-total-income">₹0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Total Expenses</span>
+              <span class="stat-value text-red" id="tracker-total-expenses">₹0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Net Savings</span>
+              <span class="stat-value text-teal" id="tracker-net-savings">₹0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Savings Rate</span>
+              <span class="stat-value text-amber">0%</span>
+            </div>
+          </div>
+
+          <div class="content-grid content-grid-2">
+            <!-- Add Income/Expense -->
+            <div>
+              <div class="card mb-md">
+                <h2 class="section-title mb-md">Add Income</h2>
+                <form id="income-form" style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div class="form-group"><label class="form-label" for="income-desc">Source</label><input type="text" id="income-desc" class="form-input" placeholder="e.g. Salary, Freelance" required></div>
+                  <div class="form-group"><label class="form-label" for="income-amount">Amount (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="income-amount" class="form-input" placeholder="50000" required min="0"></div></div>
+                  <button type="submit" class="btn btn-primary">Add Income</button>
+                </form>
+              </div>
+              <div class="card">
+                <h2 class="section-title mb-md">Add Expense</h2>
+                <form id="expense-form" style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div class="form-group"><label class="form-label" for="expense-desc">Description</label><input type="text" id="expense-desc" class="form-input" placeholder="e.g. Rent, Groceries" required></div>
+                  <div class="form-group"><label class="form-label" for="expense-amount">Amount (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="expense-amount" class="form-input" placeholder="10000" required min="0"></div></div>
+                  <div class="form-group"><label class="form-label" for="expense-category">Category</label>
+                    <select id="expense-category" class="form-select">
+                      <option>Housing</option><option>Food</option><option>Transport</option><option>Health</option><option>Entertainment</option><option>Shopping</option><option>Education</option><option>Other</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-secondary">Add Expense</button>
+                </form>
+              </div>
+            </div>
+            <!-- Transaction List -->
+            <div>
+              <div class="card" style="height:fit-content;">
+                <h2 class="section-title mb-md">Recent Transactions</h2>
+                <div id="expense-list"></div>
+              </div>
+              <div class="chart-container mt-md">
+                <h3 class="chart-title">Income vs Expenses</h3>
+                <div style="height:220px;"><canvas id="expenseChart" aria-label="Income vs expenses chart"></canvas></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Budget Calculator -->
+          <div class="calculator-card">
+            <div class="calculator-header">
+              <div class="feature-icon" style="background:var(--color-green-dim);color:var(--color-green);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div><h2 class="section-title">50/30/20 Budget Calculator</h2><p class="text-caption text-muted-color">Classic budgeting framework for healthy finances</p></div>
+            </div>
+            <div class="calculator-body">
+              <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+                <div class="form-group"><label class="form-label" for="budget-income">Monthly Take-Home Income (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="budget-income" class="form-input" value="50000" min="0"></div></div>
+                <div class="form-group"><label class="form-label" for="budget-needs">Needs (Rent, EMI, Bills) (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="budget-needs" class="form-input" value="25000" min="0"></div></div>
+                <div class="form-group"><label class="form-label" for="budget-wants">Wants (Dining, Entertainment) (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="budget-wants" class="form-input" value="15000" min="0"></div></div>
+                <div class="form-group"><label class="form-label" for="budget-savings">Savings & Investments (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="budget-savings" class="form-input" value="10000" min="0"></div></div>
+              </div>
+              <div>
+                <div class="calculator-result mb-md">
+                  <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Remaining Balance</div>
+                  <div class="result-amount" id="budget-remaining-amount">₹0</div>
+                  <div style="height:1px;background:rgba(255,255,255,0.1);margin:12px 0;"></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-size:0.8rem;" id="budget-rule-check"></div>
+                </div>
+                <div style="height:200px;"><canvas id="budgetPieChart" aria-label="Budget breakdown chart"></canvas></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Savings Goals -->
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">Savings Goals</h2>
+            </div>
+            <div class="content-grid content-grid-sidebar">
+              <div id="savings-goals-list"></div>
+              <div class="card">
+                <h3 class="text-heading-4 mb-md">Add New Goal</h3>
+                <form id="goal-form" style="display:flex;flex-direction:column;gap:var(--space-md);">
+                  <div class="form-group"><label class="form-label" for="goal-name">Goal Name</label><input type="text" id="goal-name" class="form-input" placeholder="e.g. Emergency Fund" required></div>
+                  <div class="form-group"><label class="form-label" for="goal-target">Target Amount (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="goal-target" class="form-input" placeholder="100000" required min="0"></div></div>
+                  <div class="form-group"><label class="form-label" for="goal-category">Category</label>
+                    <select id="goal-category" class="form-select">
+                      <option>Emergency Fund</option><option>Vacation</option><option>Home Down Payment</option><option>Education</option><option>Wedding</option><option>Car</option><option>Other</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Add Goal</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Net Worth & Retirement -->
+          <div class="calculator-card">
+            <div class="calculator-header">
+              <div class="feature-icon" style="background:rgba(139,92,246,0.12);color:var(--color-purple);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><h2 class="section-title">Retirement Calculator</h2><p class="text-caption text-muted-color">How much do you need to retire comfortably?</p></div>
+            </div>
+                <div class="form-group"><label class="form-label" for="ret-retire-age">Retirement Age</label><input type="number" id="ret-retire-age" class="form-input" value="60" min="40" max="70"></div>
+                <div class="form-group"><label class="form-label" for="ret-monthly-expense">Monthly Expenses Now (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="ret-monthly-expense" class="form-input" value="50000" min="0"></div></div>
+                <div class="form-group"><label class="form-label" for="ret-life-exp">Life Expectancy</label><input type="number" id="ret-life-exp" class="form-input" value="85" min="70" max="100"></div>
+                <div class="form-group"><label class="form-label" for="ret-inflation">Inflation Rate (%)</label><input type="number" id="ret-inflation" class="form-input" value="6" min="1" max="15" step="0.5"></div>
+                <div class="form-group"><label class="form-label" for="ret-return">Expected Return (%)</label><input type="number" id="ret-return" class="form-input" value="12" min="1" max="20" step="0.5"></div>
+              </div>
+              <div class="calculator-result">
+                <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Retirement Corpus Needed</div>
+                <div class="result-amount" id="ret-corpus">₹0</div>
+                <div style="height:1px;background:rgba(255,255,255,0.1);margin:12px 0;"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <div><div style="font-size:0.7rem;color:rgba(255,255,255,0.5);">Monthly SIP Needed</div><div style="font-weight:700;color:var(--color-teal);" id="ret-monthly-sip">₹0</div></div>
+                  <div><div style="font-size:0.7rem;color:rgba(255,255,255,0.5);">Future Monthly Expense</div><div style="font-weight:700;color:var(--color-amber);" id="ret-future-expense">₹0</div></div>
+                </div>
+              </div>
+        </section>
+
+        <!-- ════════════════════════════════════
+             AI FINANCE SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-ai" aria-label="AI Finance Guide">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">🤖 AI Finance Guide</h1>
+              <p class="page-subtitle">Ask FinAI anything about credit cards, SIP, debt payoff, budgeting, investments, or AI-first money tools. Simple answers, always.</p>
+            </div>
+            <span class="badge badge-purple">Powered by FinAI</span>
+          </div>
+
+          <div class="card card-gradient reveal mb-lg" style="overflow:hidden;">
+            <div class="grid grid-2 gap-xl" style="align-items:center;">
+              <div>
+                <span class="badge badge-purple" style="background:rgba(255,255,255,0.14);color:white;">2026 Fintech Blog Focus</span>
+                <h2 class="text-heading-2 mt-md" style="color:white;">AI-First Personal Finance</h2>
+                <p class="text-body mt-md" style="color:rgba(255,255,255,0.78);">Build traffic around practical guides for agentic AI, digital co-pilots, automated budgeting, fraud prevention, and hyper-personalized wealth management. These topics combine high reader intent with valuable fintech advertising categories.</p>
+                <div class="flex gap-sm mt-lg" style="flex-wrap:wrap;">
+                  <button class="btn btn-primary" onclick="window.openArticle('agentic-ai-budgeting')">Read AI Budgeting Guide</button>
+                  <button class="btn btn-secondary" style="color:white;border-color:rgba(255,255,255,0.3);" onclick="window.openArticle('fintech-blog-seo-roadmap')">SEO Topic Roadmap</button>
+                </div>
+              </div>
+              <div class="grid grid-2 gap-md">
+                <div class="metric-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14);">
+                  <div class="metric-term" style="color:var(--color-teal);">Automated Budgeting</div>
+                  <div class="metric-def" style="color:rgba(255,255,255,0.72);">AI categorizes spends, detects leaks, and suggests weekly fixes.</div>
+                </div>
+                <div class="metric-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14);">
+                  <div class="metric-term" style="color:var(--color-amber);">Fraud Prevention</div>
+                  <div class="metric-def" style="color:rgba(255,255,255,0.72);">Explain alerts, UPI safety, card controls, and scam detection.</div>
+                </div>
+                <div class="metric-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14);">
+                  <div class="metric-term" style="color:#C4B5FD;">Wealth Co-Pilots</div>
+                  <div class="metric-def" style="color:rgba(255,255,255,0.72);">Personalized asset allocation, SIP reviews, and rebalancing workflows.</div>
+                </div>
+                <div class="metric-card" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14);">
+                  <div class="metric-term" style="color:#86EFAC;">Search Intent</div>
+                  <div class="metric-def" style="color:rgba(255,255,255,0.72);">Target long-tail questions people search before using tools.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-grid content-grid-sidebar">
+            <!-- Chat -->
+            <div class="chat-container">
+              <div class="chat-header">
+                <div class="chat-avatar">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1437" stroke-width="2.5"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg>
+                </div>
+                <div>
+                  <div style="font-weight:700;font-size:0.95rem;">FinAI — Finance Mentor</div>
+                  <div class="chat-status"><span class="status-dot"></span>Online • Ready to help</div>
+                </div>
+              </div>
+              <div class="chat-messages" id="chatMessages" role="log" aria-live="polite"></div>
+              <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggestion-chip" onclick="window.chatSend('What is SIP?')">What is SIP?</button>
+                <button class="suggestion-chip" onclick="window.chatSend('How to improve CIBIL score?')">Improve CIBIL</button>
+                <button class="suggestion-chip" onclick="window.chatSend('Debt avalanche')">Debt Avalanche</button>
+                <button class="suggestion-chip" onclick="window.chatSend('Budgeting')">Budgeting Tips</button>
+                <button class="suggestion-chip" onclick="window.chatSend('agentic AI budgeting')">AI Budgeting</button>
+                <button class="suggestion-chip" onclick="window.chatSend('AI fraud prevention')">AI Fraud Safety</button>
+              </div>
+              <div class="chat-input-area">
+                <textarea class="chat-input" id="chatInput" placeholder="Ask anything about finance..." rows="1" aria-label="Type your finance question"></textarea>
+                <button class="btn btn-primary" id="chatSendBtn" aria-label="Send message">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Topic cards -->
+            <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+              <div class="section-header"><h2 class="section-title">Quick Topics</h2></div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('What is a credit card and how does it work?')">💳 How credit cards work</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('CIBIL score')">📊 CIBIL score explained</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('mutual fund')">📈 Mutual funds basics</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('SIP')">💰 Why start SIP</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('index fund')">📋 Index funds explained</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('budgeting')">📝 How to budget</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('emergency fund')">🛡️ Emergency fund</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('expense ratio')">📉 Expense ratio</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('debt snowball')">❄️ Debt Snowball</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('side hustle')">🚀 Side hustle tips</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('agentic AI budgeting')">AI budgeting co-pilots</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('AI fraud prevention')">AI fraud prevention</button>
+                <button class="btn btn-secondary w-full" style="justify-content:flex-start;" onclick="window.chatSend('AI wealth management')">AI wealth management</button>
+              </div>
+              <div class="info-box amber">
+                <strong>Disclaimer:</strong> FinAI provides educational information only. Always consult a SEBI-registered advisor for personalized financial advice.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════
+             SIDE HUSTLE SECTION
+             ════════════════════════════════════ -->
+        <section class="section-page" id="section-hustle" aria-label="Side Hustle Tracker">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">🚀 Side Hustle Tracker</h1>
+              <p class="page-subtitle">Track your extra income from freelancing, content creation, and other sources. Grow your income graph month by month.</p>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">This Month</span>
+              <span class="stat-value text-teal" id="hustle-monthly">₹0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Total Earned</span>
+              <span class="stat-value text-green" id="hustle-yearly">₹0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Income Sources</span>
+              <span class="stat-value">Multiple</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Target Month</span>
+              <span class="stat-value text-amber">Set Goal</span>
+            </div>
+          </div>
+
+          <div class="content-grid content-grid-sidebar-left">
+            <div class="card">
+              <h2 class="section-title mb-md">Log Income</h2>
+              <form id="hustle-form" style="display:flex;flex-direction:column;gap:var(--space-md);">
+                <div class="form-group"><label class="form-label" for="hustle-source">Income Source</label><input type="text" id="hustle-source" class="form-input" placeholder="e.g. Upwork Project" required></div>
+                <div class="form-group"><label class="form-label" for="hustle-amount">Amount Earned (₹)</label><div class="input-with-prefix"><span class="input-prefix">₹</span><input type="number" id="hustle-amount" class="form-input" placeholder="5000" required min="0"></div></div>
+                <div class="form-group"><label class="form-label" for="hustle-category">Category</label>
+                  <select id="hustle-category" class="form-select">
+                    <option>Freelancing</option><option>Part-time Job</option><option>Content Creation</option><option>Affiliate Marketing</option><option>Online Courses</option><option>Consulting</option><option>Digital Products</option><option>Other</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Log Income</button>
+              </form>
+              <div class="divider"></div>
+              <h3 class="text-heading-4 mb-md">Recent Entries</h3>
+              <div id="hustle-list"></div>
+            </div>
+            <div>
+              <div class="chart-container mb-md">
+                <h3 class="chart-title">Monthly Side Income Growth</h3>
+                <div style="height:250px;"><canvas id="sideHustleChart" aria-label="Side hustle income chart"></canvas></div>
+              </div>
+              <div class="card">
+                <h3 class="text-heading-4 mb-md">Side Hustle Ideas</h3>
+                <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+                  <div class="metric-card"><div class="metric-term">💻 Freelancing</div><div class="metric-def">Upwork, Fiverr, Toptal. Design, coding, writing. ₹500-₹5,000/hour possible.</div></div>
+                  <div class="metric-card"><div class="metric-term">📹 Content Creation</div><div class="metric-def">YouTube, Instagram Reels. Build audience, earn from ads, sponsorships.</div></div>
+                  <div class="metric-card"><div class="metric-term">🎓 Online Teaching</div><div class="metric-def">Udemy, Unacademy, private tutoring. Teach skills you already have.</div></div>
+                  <div class="metric-card"><div class="metric-term">🤝 Affiliate Marketing</div><div class="metric-def">Promote products, earn commissions. Amazon Associates, bank referrals.</div></div>
+                  <div class="metric-card"><div class="metric-term">📦 Digital Products</div><div class="metric-def">Create templates, ebooks, courses. Sell once, earn forever (passive income).</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ════════════════════════════════════
+             LEARNING CENTER SECTION
+             ════════════════════════════════════ -->
+        <!-- Latest Finance News Section -->
+        <section class="section-page" id="section-news" aria-label="Latest Finance News">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Latest Finance News</h1>
+              <p class="page-subtitle">Real-time market, economy, stocks, mutual funds, crypto, and personal finance updates powered securely through the FinWise backend.</p>
+            </div>
+            <div class="news-refresh-pill" id="newsLastUpdated">Waiting for updates</div>
+          </div>
+
+          <section class="news-hero reveal" aria-labelledby="newsHeroTitle">
+            <div>
+              <span class="badge badge-teal">Finnhub Live Feed</span>
+              <h2 class="text-heading-2 mt-md" id="newsHeroTitle">Track the stories moving money today</h2>
+              <p class="text-body mt-md">Search and filter the latest finance headlines without exposing your Finnhub API key in the browser. News is cached server-side and refreshes automatically every 10 minutes.</p>
+            </div>
+            <div class="news-hero-stats" aria-label="Finance news metrics">
+              <div>
+                <span class="news-stat-value" id="newsCount">0</span>
+                <span class="news-stat-label">Articles</span>
+              </div>
+              <div>
+                <span class="news-stat-value">10m</span>
+                <span class="news-stat-label">Auto Refresh</span>
+              </div>
+              <div>
+                <span class="news-stat-value">20</span>
+                <span class="news-stat-label">Latest Max</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="news-toolbar reveal" role="search">
+            <div class="news-search">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="search" id="newsSearchInput" placeholder="Search news by keyword..." aria-label="Search finance news">
+            </div>
+            <button class="btn btn-secondary" id="newsRetryBtn" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+              Refresh
+            </button>
+          </div>
+
+          <div class="news-category-tabs" id="newsCategoryTabs" aria-label="News categories">
+            <button class="news-category active" type="button" data-news-category="all">All</button>
+            <button class="news-category" type="button" data-news-category="markets">Markets</button>
+            <button class="news-category" type="button" data-news-category="stocks">Stocks</button>
+            <button class="news-category" type="button" data-news-category="mutual-funds">Mutual Funds</button>
+            <button class="news-category" type="button" data-news-category="economy">Economy</button>
+            <button class="news-category" type="button" data-news-category="crypto">Crypto</button>
+            <button class="news-category" type="button" data-news-category="personal-finance">Personal Finance</button>
+          </div>
+
+          <div class="news-status" id="newsStatus" hidden></div>
+          <div class="news-grid" id="newsGrid" aria-live="polite"></div>
+        </section>
+
+        <section class="section-page" id="section-learning" aria-label="Learning Center">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">📚 Learning Center</h1>
+              <p class="page-subtitle">Structured finance articles and guides — beginner-friendly, practical, and jargon-free.</p>
+            </div>
+          </div>
+
+          <!-- Filter Tags -->
+          <div class="tag-filter">
+            <button class="tag-btn active" onclick="filterLearning('all', this)">All Topics</button>
+            <button class="tag-btn" data-filter-ai onclick="filterLearning('ai', this)">AI Finance</button>
+            <button class="tag-btn" onclick="filterLearning('credit', this)">Credit Cards</button>
+            <button class="tag-btn" onclick="filterLearning('investing', this)">Investing</button>
+            <button class="tag-btn" onclick="filterLearning('budgeting', this)">Budgeting</button>
+            <button class="tag-btn" onclick="filterLearning('debt', this)">Debt</button>
+            <button class="tag-btn" onclick="filterLearning('income', this)">Income</button>
+            <button class="tag-btn" onclick="filterLearning('basics', this)">Basics</button>
+          </div>
+
+          <!-- Learning Cards Grid -->
+          <div class="card-grid card-grid-3 reveal-cascade" id="learning-grid">
+            <!-- AI-First Finance -->
+            <div class="learning-card" data-category="ai" onclick="window.openArticle('agentic-ai-budgeting')">
+              <div class="card-tag"><span class="badge badge-purple">AI Finance</span></div>
+              <div class="card-title">Agentic AI Budgeting: How Finance Co-Pilots Automate Your Money</div>
+              <div class="card-summary">A practical guide to AI spend tracking, budget alerts, subscriptions, and weekly money decisions.</div>
+              <div class="card-meta"><span>9 min read</span><span>â€¢</span><span>Trending</span></div>
+            </div>
+            <div class="learning-card" data-category="ai" onclick="window.openArticle('ai-fraud-prevention')">
+              <div class="card-tag"><span class="badge badge-purple">AI Finance</span></div>
+              <div class="card-title">AI Fraud Prevention: How to Use Smart Alerts Without Losing Control</div>
+              <div class="card-summary">Learn how AI spots unusual card, UPI, and account activity, plus the safety rules every user needs.</div>
+              <div class="card-meta"><span>8 min read</span><span>â€¢</span><span>Security</span></div>
+            </div>
+            <div class="learning-card" data-category="ai" onclick="window.openArticle('ai-wealth-copilot')">
+              <div class="card-tag"><span class="badge badge-purple">AI Finance</span></div>
+              <div class="card-title">Hyper-Personalized Wealth Management With AI Co-Pilots</div>
+              <div class="card-summary">How robo-advice, portfolio reviews, SIP nudges, and tax-aware rebalancing can become more personal.</div>
+              <div class="card-meta"><span>10 min read</span><span>â€¢</span><span>Wealthtech</span></div>
+            </div>
+            <div class="learning-card" data-category="ai" onclick="window.openArticle('fintech-blog-seo-roadmap')">
+              <div class="card-tag"><span class="badge badge-teal">SEO</span></div>
+              <div class="card-title">Fintech Blog Roadmap: Long-Tail Topics for High-Traffic AI Finance Content</div>
+              <div class="card-summary">A topic cluster plan for search-friendly articles, tools, and guides around AI-first personal finance.</div>
+              <div class="card-meta"><span>7 min read</span><span>â€¢</span><span>Creator</span></div>
+            </div>
+            <!-- Credit Cards -->
+            <div class="learning-card" data-category="credit" onclick="window.openArticle('how-credit-cards-work')">
+              <div class="card-tag"><span class="badge badge-teal">Credit</span></div>
+              <div class="card-title">How Credit Cards Work: A Complete Beginner's Guide</div>
+              <div class="card-summary">Understand the billing cycle, grace period, and how to avoid interest charges entirely.</div>
+              <div class="card-meta"><span>5 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="credit" onclick="window.openArticle('cibil-score')">
+              <div class="card-tag"><span class="badge badge-teal">Credit</span></div>
+              <div class="card-title">CIBIL Score: What It Is, Why It Matters, and How to Improve It</div>
+              <div class="card-summary">Everything you need to know about your credit score and actionable steps to reach 750+.</div>
+              <div class="card-meta"><span>7 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="credit" onclick="window.openArticle('best-credit-cards')">
+              <div class="card-tag"><span class="badge badge-teal">Credit</span></div>
+              <div class="card-title">Best Credit Cards in India 2025: Cashback, Travel & Rewards</div>
+              <div class="card-summary">Comparison of top 10 credit cards for different spending habits and income levels.</div>
+              <div class="card-meta"><span>10 min read</span><span>•</span><span>Intermediate</span></div>
+            </div>
+            <!-- Investing -->
+            <div class="learning-card" data-category="investing" onclick="window.openArticle('sip-101')">
+              <div class="card-tag"><span class="badge badge-green">Investing</span></div>
+              <div class="card-title">SIP 101: How ₹5,000/Month Can Build ₹1 Crore in 20 Years</div>
+              <div class="card-summary">The math behind SIP and why starting early makes an enormous difference to your final corpus.</div>
+              <div class="card-meta"><span>6 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="investing" onclick="window.openArticle('index-vs-active')">
+              <div class="card-tag"><span class="badge badge-green">Investing</span></div>
+              <div class="card-title">Index Funds vs Active Funds: Which is Better for Long-Term?</div>
+              <div class="card-summary">Why 85% of active funds underperform the index over 15+ years and what that means for you.</div>
+              <div class="card-meta"><span>8 min read</span><span>•</span><span>Intermediate</span></div>
+            </div>
+            <div class="learning-card" data-category="investing" onclick="window.openArticle('power-of-compounding')">
+              <div class="card-tag"><span class="badge badge-green">Investing</span></div>
+              <div class="card-title">Power of Compounding: Why Einstein Called It the 8th Wonder</div>
+              <div class="card-summary">Visual examples showing how small, consistent investments snowball into massive wealth over time.</div>
+              <div class="card-meta"><span>5 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="investing" onclick="window.openArticle('simple-3-fund-portfolio')">
+              <div class="card-tag"><span class="badge badge-green">Investing</span></div>
+              <div class="card-title">How to Build a Simple 3-Fund Portfolio for Beginners</div>
+              <div class="card-summary">A simple portfolio framework: Large Cap + Mid Cap + Debt fund for balanced growth.</div>
+              <div class="card-meta"><span>9 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="investing" onclick="window.openArticle('understanding-expense-ratio')">
+              <div class="card-tag"><span class="badge badge-green">Investing</span></div>
+              <div class="card-title">Understanding Expense Ratio: The Silent Wealth Destroyer</div>
+              <div class="card-summary">How even 1% difference in expense ratio costs lakhs over 20 years. Choose funds wisely.</div>
+              <div class="card-meta"><span>6 min read</span><span>•</span><span>Intermediate</span></div>
+            </div>
+            <!-- Budgeting -->
+            <div class="learning-card" data-category="budgeting">
+              <div class="card-tag"><span class="badge badge-amber">Budgeting</span></div>
+              <div class="card-title">The 50/30/20 Budget Rule: Simple Framework for Beginners</div>
+              <div class="card-summary">Split your income into needs, wants, and savings using this proven and easy budgeting framework.</div>
+              <div class="card-meta"><span>5 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="budgeting">
+              <div class="card-tag"><span class="badge badge-amber">Budgeting</span></div>
+              <div class="card-title">Emergency Fund: How Much, Where to Keep It, and When to Use It</div>
+              <div class="card-summary">The complete guide to building your financial safety net before starting investments.</div>
+              <div class="card-meta"><span>7 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="budgeting">
+              <div class="card-tag"><span class="badge badge-amber">Budgeting</span></div>
+              <div class="card-title">How to Track Expenses Without Feeling Overwhelmed</div>
+              <div class="card-summary">Simple methods to track spending — from apps to basic Excel. Find what works for you.</div>
+              <div class="card-meta"><span>6 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <!-- Debt -->
+            <div class="learning-card" data-category="debt">
+              <div class="card-tag"><span class="badge badge-red">Debt</span></div>
+              <div class="card-title">Debt Snowball vs Avalanche: Which Method Gets You Debt-Free Faster?</div>
+              <div class="card-summary">Compare both strategies with real examples and find the right one for your personality.</div>
+              <div class="card-meta"><span>8 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="debt">
+              <div class="card-tag"><span class="badge badge-red">Debt</span></div>
+              <div class="card-title">How to Pay Off Credit Card Debt Fast: A Step-by-Step Guide</div>
+              <div class="card-summary">Practical strategies to eliminate credit card debt quickly without going crazy in the process.</div>
+              <div class="card-meta"><span>9 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <!-- Income -->
+            <div class="learning-card" data-category="income">
+              <div class="card-tag"><span class="badge badge-purple">Income</span></div>
+              <div class="card-title">10 Realistic Side Hustles You Can Start This Weekend in India</div>
+              <div class="card-summary">No-hype, practical side income ideas with realistic earning potential for Indian audiences.</div>
+              <div class="card-meta"><span>10 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="income">
+              <div class="card-tag"><span class="badge badge-purple">Income</span></div>
+              <div class="card-title">Freelancing in India: How to Price Your Work and Get Clients</div>
+              <div class="card-summary">Setting rates, finding your first clients, and scaling your freelance income over time.</div>
+              <div class="card-meta"><span>12 min read</span><span>•</span><span>Intermediate</span></div>
+            </div>
+            <!-- Basics -->
+            <div class="learning-card" data-category="basics">
+              <div class="card-tag"><span class="badge badge-navy">Basics</span></div>
+              <div class="card-title">Personal Finance Basics: Where to Start If You Know Nothing</div>
+              <div class="card-summary">The complete beginner's roadmap — emergency fund, insurance, debt, investments, in that order.</div>
+              <div class="card-meta"><span>10 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="basics">
+              <div class="card-tag"><span class="badge badge-navy">Basics</span></div>
+              <div class="card-title">Inflation: The Silent Tax on Your Savings and How to Beat It</div>
+              <div class="card-summary">Why money kept in a savings account loses value and what you can do to preserve wealth.</div>
+              <div class="card-meta"><span>6 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+            <div class="learning-card" data-category="basics">
+              <div class="card-tag"><span class="badge badge-navy">Basics</span></div>
+              <div class="card-title">Net Worth: How to Calculate Yours and Why It Matters</div>
+              <div class="card-summary">Understanding your financial position: assets minus liabilities and how to grow this number.</div>
+              <div class="card-meta"><span>5 min read</span><span>•</span><span>Beginner</span></div>
+            </div>
+          </div>
+
+          <div id="learningEmpty" style="display:none;" class="empty-state">
+            <div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <span class="empty-title">No articles found</span>
+            <span class="empty-desc">Try different search terms or clear the search to see all articles.</span>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="reveal">
+            <div class="section-header"><h2 class="section-title">Frequently Asked Questions</h2></div>
+            <div data-accordion-group="faq" style="display:flex;flex-direction:column;gap:var(--space-sm);">
+              <div class="accordion-item open">
+                <button class="accordion-header">
+                  How much should I invest in SIP as a beginner?
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="accordion-body">Start with whatever you can afford consistently — even ₹500/month. The amount matters less than the habit of investing. Gradually increase your SIP by 10-15% every year as your income grows. Don't wait to have a large amount; time in the market is more important than the amount invested.</div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  Is a credit card safe for beginners?
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="accordion-body">Yes, if used correctly. The key rule: only spend what you already have in your bank account. Think of the credit card as a payment tool, not as extra money. Always pay the full outstanding bill (not minimum due) before the due date. Enable auto-pay to avoid forgetting.</div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  Should I pay off debt before investing?
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="accordion-body">It depends on the interest rate. High-interest debt (credit cards at 24-48%): Pay off first — you can't get consistent 24%+ returns from investments. Medium-interest debt (personal loans at 12-18%): Pay minimum, invest the rest. Low-interest debt (home loans at 7-9%): Continue paying EMI and invest simultaneously since home loan interest is tax-deductible.</div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  How do I start investing in mutual funds?
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="accordion-body">1. Complete KYC (required once — can be done online). 2. Open an account on Groww, Zerodha Coin, or Kuvera (all free). 3. Start with a simple Nifty 50 Index Fund — ₹500/month via SIP. 4. Set up auto-debit so the investment happens automatically. 5. Don't check daily. Review once in 6-12 months.</div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  What is an emergency fund and how much should I have?
+                  <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="accordion-body">An emergency fund is 3-6 months of living expenses saved in an instantly accessible account. Keep it in: Liquid Mutual Funds (best — 1-day withdrawal, higher returns than savings account) or a High-interest savings account. Don't invest your emergency fund in stocks — markets could be down right when you need the money.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- end page-content -->
+
+      <!-- Global Footer -->
+      <footer class="global-footer" style="margin-top: auto; padding: var(--space-xl) var(--space-xl); text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-card);">
+        <div style="margin-bottom: var(--space-md);">
+          <div class="logo-mark" style="display:inline-block; margin-bottom:var(--space-sm);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">FinWise</div>
+          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-top: 4px;">Learn Finance. Manage Money. Build Wealth.</p>
+        </div>
+        <div style="display: flex; justify-content: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+          <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Privacy Policy</a>
+          <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Terms of Service</a>
+          <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.875rem;">Contact Us</a>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.75rem;">&copy; 2026 FinWise. All rights reserved. For educational purposes only.</p>
+      </footer>
+
+    </main>
+  </div><!-- end app-shell -->
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer" role="alert" aria-live="assertive"></div>
+
+  <!-- Article Modal -->
+  <div class="modal-overlay" id="articleModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title" id="articleModalTitle">Article Title</h2>
+        <button class="modal-close" onclick="window.closeArticle()" aria-label="Close article">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-content" id="articleModalContent">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/articles.js"></script>
+  
+  <script src="js/app.js"></script>
+  <script src="js/calculators.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ai-chat.js"></script>
+  <script src="js/news.js"></script>
+  <script src="js/trackers.js"></script>
+
+  <script>
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Learning filter function
+    function filterLearning(category, btn) {
+      // Update button states
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Filter cards
+      const cards = document.querySelectorAll('#learning-grid .learning-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Method selection for debt
+    function selectMethod(method) {
+      document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById(`method-${method}`)?.classList.add('selected');
+      const methodSelect = document.getElementById('debt-method');
+      if (methodSelect) {
+        methodSelect.value = method;
+        methodSelect.dispatchEvent(new Event('change'));
+      }
+    }
+
+    // Auto-resize chat input
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInput = document.getElementById('chatInput');
+      if (chatInput) {
+        chatInput.addEventListener('input', function() {
+          this.style.height = 'auto';
+          this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+      }
+    });
+  </script>
+
+  <script src="js/sip-engine.js"></script>
+  <script src="js/sip-ui.js"></script>
+</body>
+</html>

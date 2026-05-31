@@ -1,0 +1,13 @@
+{
+  "name": "finwise-finance-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FinWise personal finance website with secure Finnhub-backed finance news.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
