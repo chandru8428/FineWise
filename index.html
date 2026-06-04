@@ -22,10 +22,10 @@
   <link rel="stylesheet" href="styles/animations.css">
 
   <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
 
   <style>
     /* Inline critical CSS */
@@ -55,6 +55,121 @@
     .hero-float-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-xl); padding: var(--space-lg); min-width: 220px; }
     @media(max-width:768px){.do-dont{grid-template-columns:1fr;}.fund-screener-row{grid-template-columns:1fr 1fr 1fr;}}
   </style>
+
+  <!-- Favicon / Fix for 404 -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Sitemap -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <!-- Schema.org Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "FinWise",
+    "url": "https://finwisetech.netlify.app",
+    "logo": "https://finwisetech.netlify.app/logo.png",
+    "description": "India's beginner-friendly platform for AI-first personal finance",
+    "sameAs": [
+      "https://twitter.com/finwise",
+      "https://linkedin.com/company/finwise",
+      "https://instagram.com/finwise"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-XXXXXXXXXX",
+      "contactType": "Customer Support"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Personal Finance Education & Tools",
+    "description": "AI-powered budgeting, SIP calculator, credit card analyzer, fraud prevention",
+    "provider": {
+      "@type": "Organization",
+      "name": "FinWise"
+    },
+    "areaServed": "IN",
+    "hasOfferingType": [
+      "Calculator",
+      "Educational Content",
+      "Financial Tools"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is SIP investing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SIP (Systematic Investment Plan) is a method to invest fixed amounts regularly in mutual funds..."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How to check CIBIL score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CIBIL is a credit information bureau in India. You can check your score at..."
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://finwisetech.netlify.app",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://finwisetech.netlify.app/search?q={search_term_string}"
+      }
+    }
+  }
+  </script>
+  <!-- Suppress missing favicon errors quickly -->
+  <script>
+    if (typeof document !== 'undefined') {
+      // Just in case the icons aren't available, don't throw console errors
+      document.querySelector('link[rel="icon"]')?.addEventListener('error', function(e) {
+        e.target.remove();
+      });
+    }
+  </script>
+  <!-- Sentry Error Monitoring -->
+  <script src="https://browser.sentry-cdn.com/7.80.0/bundle.min.js" async></script>
+  <script>
+    if (typeof Sentry !== 'undefined') {
+      Sentry.init({
+        dsn: "https://YOUR_DSN@sentry.io/PROJECT_ID",
+        environment: "production",
+        tracesSampleRate: 0.1,
+      });
+    }
+    window.addEventListener('error', function(e) {
+      console.error('Global Error:', e.error);
+      if (typeof Sentry !== 'undefined') Sentry.captureException(e.error);
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      console.error('Unhandled Promise Rejection:', e.reason);
+      if (typeof Sentry !== 'undefined') Sentry.captureException(e.reason);
+    });
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -379,7 +494,7 @@
         <section class="section-page" id="section-credit" aria-label="Credit Cards">
           <div class="page-header">
             <div>
-              <h1 class="page-title">💳 Credit Cards</h1>
+              <h2 class="page-title">💳 Credit Cards</h2>
               <p class="page-subtitle">Everything you need to know to use credit cards smartly, build your CIBIL score, and avoid common traps.</p>
             </div>
             <span class="badge badge-teal">Beginner Friendly</span>
@@ -662,7 +777,7 @@
         <section class="section-page" id="section-mutual" aria-label="Mutual Funds and SIP">
           <div class="page-header">
             <div>
-              <h1 class="page-title">📈 Mutual Funds & SIP</h1>
+              <h2 class="page-title">📈 Mutual Funds & SIP</h2>
               <p class="page-subtitle">Learn how to invest smartly, understand different fund types, and use SIP to build long-term wealth.</p>
             </div>
             <span class="badge badge-green">Wealth Building</span>
@@ -1198,7 +1313,7 @@
         <section class="section-page" id="section-debt" aria-label="Debt Payoff">
           <div class="page-header">
             <div>
-              <h1 class="page-title">💸 Debt Payoff Planner</h1>
+              <h2 class="page-title">💸 Debt Payoff Planner</h2>
               <p class="page-subtitle">Learn the smartest strategies to become debt-free and track your repayment progress.</p>
             </div>
             <span class="badge badge-red">Debt Freedom</span>
@@ -1368,7 +1483,7 @@
         <section class="section-page" id="section-finance" aria-label="Personal Finance">
           <div class="page-header">
             <div>
-              <h1 class="page-title">🏦 Personal Finance Dashboard</h1>
+              <h2 class="page-title">🏦 Personal Finance Dashboard</h2>
               <p class="page-subtitle">Track your income, expenses, savings goals, and net worth in one place.</p>
             </div>
           </div>
@@ -1576,7 +1691,7 @@
         <section class="section-page" id="section-ai" aria-label="AI Finance Guide">
           <div class="page-header">
             <div>
-              <h1 class="page-title">🤖 AI Finance Guide</h1>
+              <h2 class="page-title">🤖 AI Finance Guide</h2>
               <p class="page-subtitle">Ask FinAI anything about credit cards, SIP, debt payoff, budgeting, investments, or AI-first money tools. Simple answers, always.</p>
             </div>
             <span class="badge badge-purple">Powered by FinAI</span>
@@ -1674,7 +1789,7 @@
         <section class="section-page" id="section-hustle" aria-label="Side Hustle Tracker">
           <div class="page-header">
             <div>
-              <h1 class="page-title">🚀 Side Hustle Tracker</h1>
+              <h2 class="page-title">🚀 Side Hustle Tracker</h2>
               <p class="page-subtitle">Track your extra income from freelancing, content creation, and other sources. Grow your income graph month by month.</p>
             </div>
           </div>
@@ -1741,7 +1856,7 @@
         <section class="section-page" id="section-news" aria-label="Latest Finance News">
           <div class="page-header">
             <div>
-              <h1 class="page-title">Latest Finance News</h1>
+              <h2 class="page-title">Latest Finance News</h2>
               <p class="page-subtitle">Real-time market, economy, stocks, mutual funds, crypto, and personal finance updates powered securely through the FinWise backend.</p>
             </div>
             <div class="news-refresh-pill" id="newsLastUpdated">Waiting for updates</div>
@@ -1797,7 +1912,7 @@
         <section class="section-page" id="section-learning" aria-label="Learning Center">
           <div class="page-header">
             <div>
-              <h1 class="page-title">📚 Learning Center</h1>
+              <h2 class="page-title">📚 Learning Center</h2>
               <p class="page-subtitle">Structured finance articles and guides — beginner-friendly, practical, and jargon-free.</p>
             </div>
           </div>
@@ -2011,7 +2126,7 @@
         <section id="section-privacy" class="section-page" aria-label="Privacy Policy">
           <div class="page-header">
             <div>
-              <h1 class="page-title">Privacy Policy</h1>
+              <h2 class="page-title">Privacy Policy</h2>
             </div>
           </div>
           <div class="card reveal" style="max-width: 800px; margin: 0 auto; line-height: 1.7; color: var(--text-secondary);">
@@ -2093,7 +2208,7 @@ Email: chandruk.dev@gmail.com</p>
         <section id="section-terms" class="section-page" aria-label="Terms and Conditions">
           <div class="page-header">
             <div>
-              <h1 class="page-title">Terms & Conditions</h1>
+              <h2 class="page-title">Terms & Conditions</h2>
             </div>
           </div>
           <div class="card reveal" style="max-width: 800px; margin: 0 auto; line-height: 1.7; color: var(--text-secondary);">
@@ -2230,14 +2345,14 @@ Any disputes shall be subject to the jurisdiction of the courts in India.</p>
   </div>
 
   <!-- Scripts -->
-  <script src="js/articles.js"></script>
+  <script src="js/articles.js" defer></script>
   
-  <script src="js/app.js"></script>
-  <script src="js/calculators.js"></script>
-  <script src="js/charts.js"></script>
-  <script src="js/ai-chat.js"></script>
-  <script src="js/news.js"></script>
-  <script src="js/trackers.js"></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/calculators.js" defer></script>
+  <script src="js/charts.js" defer></script>
+  <script src="js/ai-chat.js" defer></script>
+  <script src="js/news.js" defer></script>
+  <script src="js/trackers.js" defer></script>
 
   <script>
     // Initialize Lucide icons
@@ -2283,7 +2398,7 @@ Any disputes shall be subject to the jurisdiction of the courts in India.</p>
     });
   </script>
 
-  <script src="js/sip-engine.js"></script>
-  <script src="js/sip-ui.js"></script>
+  <script src="js/sip-engine.js" defer></script>
+  <script src="js/sip-ui.js" defer></script>
 </body>
 </html>

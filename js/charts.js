@@ -397,10 +397,15 @@
       window.sideHustleChart, window.fundComparisonChart
     ];
     charts.forEach(chart => {
-      if (chart) {
+      if (chart && chart.options) {
         const d = getChartDefaults();
         if (chart.options.plugins?.legend?.labels) {
           chart.options.plugins.legend.labels.color = d.color;
+        }
+        if (chart.options.plugins?.tooltip) {
+          chart.options.plugins.tooltip.titleColor = d.color;
+          chart.options.plugins.tooltip.bodyColor = d.color;
+          chart.options.plugins.tooltip.backgroundColor = d.tooltipBg;
         }
         if (chart.options.scales?.x?.ticks) chart.options.scales.x.ticks.color = d.color;
         if (chart.options.scales?.x?.grid) chart.options.scales.x.grid.color = d.gridColor;
